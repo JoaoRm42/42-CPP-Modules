@@ -8,18 +8,20 @@ int main(int ac, char **av)
 	i = 1;
 	j = 0;
 	if (ac < 2)
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *\n";
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
 	else
 	{
-		while (av[i][j])
+		while (av[i])
 		{
-			std::cout << (char)toupper(av[i][j]);
-			j++;
-			if (!av[i][j] && av[i])
+			j = 0;
+			while (av[i][j])
 			{
-				j = 0;
-				i++;
+				std::cout << (char)toupper(av[i][j]);
+				j++;
 			}
+			i++;
+
 		}
+		std::cout << "\n";
 	}
 }
