@@ -7,10 +7,7 @@ OBJ		=	$(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME):	$(OBJ)
-			@$(CC) $(FLAGS) -o $@ $^
-
-%.o:		%.c
-			@$(CC) $(FLAGS) $(INC) -o $@ -c $<
+			@$(CC) $(FLAGS) $(OBJ) -o $(NAME)
 
 clean:
 			@rm -rf $(OBJ)
