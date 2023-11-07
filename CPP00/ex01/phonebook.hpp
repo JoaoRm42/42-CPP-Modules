@@ -23,7 +23,7 @@ class Phonebook{
 	public:
 		Phonebook( void );
 		~Phonebook( void );
-        void addcontact( void );
-	    void searchlist ( void );
+        void AddContact( void );
+	    void SearchList ( void );
         void displaycontact ( void );
 };

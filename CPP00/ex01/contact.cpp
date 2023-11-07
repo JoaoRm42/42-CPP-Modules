@@ -55,7 +55,7 @@ void Contact::ShowContact() {
     std::cout << "Darkest Secret: " << this->GetDark() << std::endl;
 }
 
-std::string Contact::list(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
+void Contact::setValues(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
     this->Firstname = Fn;
     this->Lastname = Ln;
     this->Nickname = Nick;

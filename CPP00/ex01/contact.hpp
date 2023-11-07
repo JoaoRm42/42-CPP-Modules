@@ -13,7 +13,6 @@
 #include <iostream>
 
 class Contact {
-
 	private:
 		std::string Firstname;
 		std::string Lastname;
@@ -23,7 +22,7 @@ class Contact {
 	public:
 		Contact( void );
 		~Contact ( void );
-        list ( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
+        void setValues ( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
         std::string GetFirst ( void );
         std::string GetLast ( void );
         std::string GetNick ( void );

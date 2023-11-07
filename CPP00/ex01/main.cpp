@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "contact.hpp"
 #include "phonebook.hpp"
 #include <unistd.h>
 
@@ -29,29 +28,14 @@ int	main()
 	while (1) {
 		menu();
 		std::getline(std::cin, Input);
-		if (Input == "ADD") {
-			std::cout << "\033[2J\033[H";
-			// std::cout << "Adding contact" << std::endl; Substituir pela funcao de add
-			usleep(3000000);
-			std::cout << "\033[2J\033[H";
-		}
-		else if (Input == "SEARCH") {
-			std::cout << "\033[2J\033[H";
-			// std::cout << "Searching contact" << std::endl; Substituir pela funcao de search
-			pb.searchlist();
-			usleep(3000000);
-			std::cout << "\033[2J\033[H";
-		}
-		else if (Input == "EXIT") {
-			std::cout << "\033[2J\033[H";
+		if (Input == "ADD")
+            pb.AddContact();
+		else if (Input == "SEARCH")
+			pb.SearchList();
+		else if (Input == "EXIT")
 			break ;
-		}
-		else {
-			std::cout << "\033[2J\033[H";
+		else
 			std::cout << "Wrong Input!" << std::endl;
-			usleep(3000000);
-			std::cout << "\033[2J\033[H";
-		}
 	}
 	return (0);
 }
