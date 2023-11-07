@@ -25,5 +25,5 @@ class Phonebook{
 		~Phonebook( void );
         void AddContact( void );
 	    void SearchList ( void );
-        void displaycontact ( void );
+        void DisplayContact ( void );
 };

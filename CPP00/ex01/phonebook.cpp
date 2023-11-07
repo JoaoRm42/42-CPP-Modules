@@ -40,7 +40,28 @@ void Phonebook::AddContact( void ) {
     this->Contacts[this->index++ % max].setValues(Fn, Ln, Nk, Ph, Ds);
 }
 
-void Phonebook::SearchList ( void ) {
+void Phonebook::SearchList( void ) {
+    int	input;
+
+    if (this->index == 0)
+    {
+        std::cout << "PhoneBook is empty" << std::endl;
+        std::cout << "--------------------------------------------------------------------" << std::endl;
+        return ;
+    }
+    DisplayContact();
+    std::cout << "Select a Index to see the Contact" << std::endl;
+    std::cin >> input;
+    if (input >= this->index || (input < 0 || input > 7))
+        std::cout << "Wrong Index Number" << std::endl;
+    else
+        this->Contacts[input].ShowContact();
+    std::cout << "--------------------------------------------------------------------" << std::endl;
+    std::cin.clear();
+    std::cin.ignore();
+}
+
+void Phonebook::DisplayContact ( void ) {
     std::string str;
 
     std::cout << "|  Index   |First Name|Last Name |  Nickname|" << std::endl;
