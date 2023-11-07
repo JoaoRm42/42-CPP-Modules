@@ -23,4 +23,12 @@ class Contact {
 	public:
 		Contact( void );
 		~Contact ( void );
+        list ( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
+        std::string GetFirst ( void );
+        std::string GetLast ( void );
+        std::string GetNick ( void );
+        std::string GetPhone ( void );
+        std::string GetDark ( void );
+        std::string SetString( std::string str );
+        void ShowContact ( void );
 };

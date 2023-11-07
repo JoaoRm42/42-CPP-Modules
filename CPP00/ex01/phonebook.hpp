@@ -13,15 +13,17 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "contact.hpp"
 
 class Phonebook{
 	private:
-		int	index;
-		
-
+		Contact Contacts[8];
+        int index;
+        int max;
 	public:
 		Phonebook( void );
 		~Phonebook( void );
-
-	void searchlist ( void );
+        void addcontact( void );
+	    void searchlist ( void );
+        void displaycontact ( void );
 };
