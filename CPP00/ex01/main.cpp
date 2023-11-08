@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 13:03:22 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/11/02 14:20:24 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:30:20 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,19 @@
 #include <unistd.h>
 
 void	menu( void ) {
-	std::cout << "ADD | Add contact to the Phonebook" << std::endl;
-	std::cout << "SEARCH | Search for a contact" << std::endl;
-	std::cout << "EXIT | Exit the program" << std::endl;
+	std::cout << "+———————————————————————————————————————+" << std::endl;
+	std::cout << "| ADD    → Add contact to the Phonebook |" << std::endl;
+	std::cout << "| SEARCH → Search for a contact         |" << std::endl;
+	std::cout << "| EXIT   → Exit the program             |" << std::endl;
+	std::cout << "+———————————————————————————————————————+" << std::endl;
+	std::cout << "→ ";
 }
 
 int	main()
 {
 	Phonebook	pb;
 	std::string	Input;
+	int error;
 
 	std::cout << "\033[2J\033[H";
 	while (1) {
@@ -31,11 +35,19 @@ int	main()
 		if (Input == "ADD")
             pb.AddContact();
 		else if (Input == "SEARCH")
-			pb.SearchList();
+		{
+			error = pb.SearchList();
+			if (error == 2)
+				break ;
+		}	
 		else if (Input == "EXIT")
 			break ;
 		else
-			std::cout << "Wrong Input!" << std::endl;
+		{
+			if (std::cin.eof())
+				break ;
+			system("clear");
+		}
 	}
 	return (0);
 }

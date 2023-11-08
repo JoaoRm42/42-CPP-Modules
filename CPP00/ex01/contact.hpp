@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   contact.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:58:33 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/11/02 15:47:23 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/11/08 12:09:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <unistd.h>
+#include <cstdlib>
 
 class Contact {
 	private:

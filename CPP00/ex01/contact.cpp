@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   contact.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:58:35 by joaoped2          #+#    #+#             */
-/*   Updated: 2023/10/27 16:59:34 by joaoped2         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:36:30 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,26 @@ std::string Contact::SetString(std::string str) {
 }
 
 void Contact::ShowContact() {
+    std::string str;
+    system("clear");
     std::cout << "First Name: " << this->GetFirst() << std::endl;
     std::cout << "Last Name: " << this->GetLast() << std::endl;
     std::cout << "Nickname: " << this->GetNick() << std::endl;
     std::cout << "Phonenumber: " << this->GetPhone() << std::endl;
     std::cout << "Darkest Secret: " << this->GetDark() << std::endl;
+    std::cout << std::endl;
+    std::cout << "Press Enter to continue" << std::endl;
+    std::cin >> str;
+    if (str.empty())
+    {
+        system("clear");
+        return ;
+    }
+    else
+    {
+        system("clear");
+        return ;
+    }
 }
 
 void Contact::setValues(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
@@ -61,5 +76,5 @@ void Contact::setValues(std::string Fn, std::string Ln, std::string Nick, std::s
     this->Nickname = Nick;
     this->Phonenumber = Phone;
     this->DarkestSecret = Ds;
-    return;
+    return ;
 }
