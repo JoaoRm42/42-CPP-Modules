@@ -13,12 +13,9 @@
 #include "contact.hpp"
 
 Contact::Contact() {
-//    std::cout << "Contact Constructor Called" << std::endl;
-    return;
 }
 
 Contact::~Contact() {
-//    std::cout << "Contact Destructor Called" << std::endl;
 }
 
 std::string Contact::GetFirst() {
