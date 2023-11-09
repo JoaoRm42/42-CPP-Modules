@@ -32,8 +32,11 @@ int	main()
 	while (1) {
 		menu();
 		std::getline(std::cin, Input);
-		if (Input == "ADD")
-            pb.AddContact();
+		if (Input == "ADD") {
+          error = pb.AddContact();
+          if (error == 2)
+              break ;
+        }
 		else if (Input == "SEARCH")
 		{
 			error = pb.SearchList();

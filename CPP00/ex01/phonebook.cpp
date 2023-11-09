@@ -24,108 +24,138 @@ Phonebook::~Phonebook( void ) {
 	return;
 }
 
-void Phonebook::AddContact( void ) {
+int Phonebook::AddContact( void ) {
     system("clear");
     std::string Fn, Ln, Nk, Ph, Ds;
-    std::cout << "↓ Insert First Name ↓" << std::endl;
+    std::cout << "+—————————————————————————————————————————+" << std::endl;
+    std::cout << "|          ↓ Insert First Name ↓          |" << std::endl;
+    std::cout << "+—————————————————————————————————————————+" << std::endl;
     std::getline(std::cin, Fn);
-    std::cout << "↓ Insert Last Name ↓" << std::endl;
+    std::cout << "→ ";
+    system("clear");
+    if (std::cin.eof())
+        return (2);
+    std::cout << "+————————————————————————————————————————+" << std::endl;
+    std::cout << "|          ↓ Insert Last Name ↓          |" << std::endl;
+    std::cout << "+————————————————————————————————————————+" << std::endl;
     std::getline(std::cin, Ln);
-    std::cout << "↓ Insert Nickname ↓" << std::endl;
+    std::cout << "→ ";
+    system("clear");
+    if (std::cin.eof())
+        return (2);
+    std::cout << "+———————————————————————————————————————+" << std::endl;
+    std::cout << "|          ↓ Insert Nickname ↓          |" << std::endl;
+    std::cout << "+———————————————————————————————————————+" << std::endl;
     std::getline(std::cin, Nk);
-    std::cout << "↓ Insert Phonenumber ↓" << std::endl;
+    std::cout << "→ ";
+    system("clear");
+    if (std::cin.eof())
+        return (2);
+    std::cout << "+————————————————————————————————————————+" << std::endl;
+    std::cout << "|         ↓ Insert Phonenumber ↓         |" << std::endl;
+    std::cout << "+————————————————————————————————————————+" << std::endl;
     std::getline(std::cin, Ph);
-    std::cout << "↓ Insert Darkest Secret ↓" << std::endl;
+    std::cout << "→ ";
+    system("clear");
+    if (std::cin.eof())
+        return (2);
+    std::cout << "+———————————————————————————————————————+" << std::endl;
+    std::cout << "|       ↓ Insert Darkest Secret ↓       |" << std::endl;
+    std::cout << "+———————————————————————————————————————+" << std::endl;
     std::getline(std::cin, Ds);
+    std::cout << "→ ";
+    system("clear");
+    if (std::cin.eof())
+        return (2);
     this->Contacts[this->index++ % max].setValues(Fn, Ln, Nk, Ph, Ds);
     system("clear");
-    std::cout << "Contact Added Successfully" << std::endl;
+    std::cout << "+——————————————————————————————————————+" << std::endl;
+    std::cout << "|      Contact Added Successfully      |" << std::endl;
+    std::cout << "+——————————————————————————————————————+" << std::endl;
     usleep(2000000);
     system("clear");
-    return;
+    return(0);
 }
 
-int Phonebook::GetIntLength(int number) {
-    if (number == 0) {
-        return 1;
-    }
-
-    int length = 0;
-    while (number != 0) {
-        number /= 10;
-        length++;
-    }
-    return length;
-}
-
-int Phonebook::finalresult( std::string checker ) {
+int Phonebook::FinalResult( int index ) {
+    std::string checker;
+    checker = this->Contacts[index].SetString(this->Contacts[index].GetFirst());
     if (checker.empty())
     {
         system("clear");
-        std::cout << "Contact is empty" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
+        std::cout << "|           Contact is empty           |" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
         usleep(2000000);
         system("clear");
-        SearchList();
     }
     else
         return (1);
     return(0);
 }
 
-int Phonebook::checklist ( int index, std::string intput_str, std::string checker) {
+int Phonebook::checklist ( int index, std::string intput_str ) {
     if (std::cin.eof())
         return (2);
-    else if (GetIntLength(index) > 1 || !isdigit(intput_str.front()))
+    else if (intput_str.length() > 1 || !isdigit(intput_str.front()))
     {
         system("clear");
-        std::cout << "That's not a valid number!" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
+        std::cout << "|      That's not a valid number!      |" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
         usleep(2000000);
         system("clear");
-        return SearchList();
     }
-    else if (index < 0 || index >= this->index)
+    else if (index < 0 || index > this->max - 1)
     {
+
         system("clear");
-        std::cout << "That number is not a valid index" << std::endl;
+        std::cout << "+————————————————————————————————————————+" << std::endl;
+        std::cout << "|    That number is not a valid index    |" << std::endl;
+        std::cout << "+————————————————————————————————————————+" << std::endl;
         usleep(2000000);
         system("clear");
-        return SearchList();
     }
     else
-        return finalresult(checker);
+        return FinalResult( index );
+    return (0);
 }
 
 int Phonebook::SearchList( void ) {
     const char *cpy;
     std::string intput_str;
-    std::string checker;
-    int val;
+    int val = 0;
     int index;
     
     system("clear");
     if (this->index == 0)
     {
-        std::cout << "PhoneBook is empty" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
+        std::cout << "|          PhoneBook is empty          |" << std::endl;
+        std::cout << "+——————————————————————————————————————+" << std::endl;
         usleep(2000000);
         system("clear");
         return (0);
     }
-    DisplayContact();
-    std::cout << "→ ";
-    std::cin >> intput_str;
-    if (intput_str == "EXIT")
-        return (0);
-    cpy = intput_str.c_str();
-    index = atoi(cpy);
-    checker = this->Contacts[index].SetString(this->Contacts[index].GetFirst());
-    val = checklist(index, intput_str, checker);
-    if (val == 1)
+    while (1)
     {
-        this->Contacts[index].ShowContact();
-        system("clear");
+        DisplayContact();
+        std::cout << "→ ";
+        std::cin >> intput_str;
+        if (intput_str == "EXIT")
+            break;
+        cpy = intput_str.c_str();
+        index = atoi(cpy);
+        val = checklist(index, intput_str);
+        if (val == 1)
+        {
+            this->Contacts[index].ShowContact();
+            system("clear");
+            break;
+        }
+        else if (val == 2)
+            return (2);
     }
-    else if (val == 2)
-        return (2);
     return (0);
 }
 
@@ -134,7 +164,7 @@ void DisplayMenu ( void ) {
     std::cout << "| Type the index number of the contact you want to view |" << std::endl;
     std::cout << "|                                                       |" << std::endl;
     std::cout << "| Type EXIT to go back to the Main menu                 |" <<std::endl;
-    std::cout << "+———————————————————————————————————————————————————————+\n" <<std::endl;
+    std::cout << "+———————————————————————————————————————————————————————+" <<std::endl;
 }
 
 void Phonebook::DisplayContact ( void ) {

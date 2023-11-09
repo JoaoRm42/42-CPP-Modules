@@ -26,10 +26,9 @@ class Phonebook{
 	public:
 		Phonebook( void );
 		~Phonebook( void );
-        void AddContact( void );
+        int AddContact( void );
 	    int SearchList ( void );
         void DisplayContact ( void );
-		int GetIntLength(int number);
-		int finalresult( std::string checker );
-		int checklist ( int index, std::string intput_str, std::string checker);
+		int FinalResult( int index );
+		int checklist ( int index, std::string intput_str);
 };
