@@ -13,6 +13,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstdlib>
+#include <limits>
 
 class Contact {
 	private:
@@ -24,7 +25,8 @@ class Contact {
 	public:
 		Contact( void );
 		~Contact ( void );
-        void setValues ( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
+        void SetValues ( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
+        int CheckValues( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds );
         std::string GetFirst ( void );
         std::string GetLast ( void );
         std::string GetNick ( void );
@@ -32,4 +34,5 @@ class Contact {
         std::string GetDark ( void );
         std::string SetString( std::string str );
         int ShowContact ( void );
+        void ContactShow( void );
 };

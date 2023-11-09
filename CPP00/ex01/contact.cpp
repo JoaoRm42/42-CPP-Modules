@@ -47,31 +47,69 @@ std::string Contact::SetString(std::string str) {
     return (str);
 }
 
-int Contact::ShowContact() {
-    std::string str;
-    system("clear");
+std::string PadWithSpaces(const std::string& input, int maxLength) {
+    std::string padded, truncated;
+    if (input.length() <= maxLength)
+    {
+        int spacesToAdd = maxLength - input.length();
+        padded = input;
+        padded.append(spacesToAdd, ' ');
+        return padded;
+    }
+    else
+    {
+        truncated = input.substr(0, maxLength - 1) + '.';
+        return truncated;
+    }
+}
+
+void Contact::ContactShow( void ) {
     std::cout << "+—————————————————————————————————————————+" << std::endl;
-    std::cout << "| First Name:     " << this->GetFirst() << "                       |" << std::endl;
-    std::cout << "| Last Name:      " << this->GetLast() << "                       |" << std::endl;
-    std::cout << "| Nickname:       " << this->GetNick() << "                       |" << std::endl;
-    std::cout << "| Phonenumber:    " << this->GetPhone() << "                       |" << std::endl;
-    std::cout << "| Darkest Secret: " << this->GetDark() << "                       |" << std::endl;
+    std::cout << "| First Name:     " << PadWithSpaces(this->GetFirst(), 24) << "|" << std::endl;
+    std::cout << "| Last Name:      " << PadWithSpaces(this->GetLast(), 24) << "|" << std::endl;
+    std::cout << "| Nickname:       " << PadWithSpaces(this->GetNick(), 24) << "|" << std::endl;
+    std::cout << "| Phonenumber:    " << PadWithSpaces(this->GetPhone(), 24) << "|" << std::endl;
+    std::cout << "| Darkest Secret: " << PadWithSpaces(this->GetDark(), 24) << "|" << std::endl;
     std::cout << "+—————————————————————————————————————————+" << std::endl;
     std::cout << std::endl;
     std::cout << "Type EXIT to leave the contact information" << std::endl;
     std::cout << "→ ";
-    std::cin >> str;
+}
+
+int Contact::ShowContact() {
+    std::string str;
+    system("clear");
+    ContactShow();
     while (1)
     {
+        std::getline(std::cin, str);
         if (str == "EXIT")
             break;
         else if (std::cin.eof())
             return (2);
+        else {
+            system("clear");
+            ContactShow();
+        }
     }
     return (0);
 }
 
-void Contact::setValues(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
+int Contact::CheckValues( std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds ) {
+    if (Fn == "" || Ln == "" || Nick == "" || Phone == "" || Ds == "" )
+    {
+        system("clear");
+        std::cout << "+—————————————————————————————————————————+" << std::endl;
+        std::cout << "| Error! There should not be Empty Fields |" << std::endl;
+        std::cout << "+—————————————————————————————————————————+" << std::endl;
+        usleep(2000000);
+        system("clear");
+        return (1);
+    }
+    return (0);
+}
+
+void Contact::SetValues(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
     this->Firstname = Fn;
     this->Lastname = Ln;
     this->Nickname = Nick;

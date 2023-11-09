@@ -67,7 +67,9 @@ int Phonebook::AddContact( void ) {
     system("clear");
     if (std::cin.eof())
         return (2);
-    this->Contacts[this->index++ % max].setValues(Fn, Ln, Nk, Ph, Ds);
+    if (Contacts->CheckValues(Fn, Ln, Nk, Ph, Ds) == 1)
+        return (0);
+    this->Contacts[this->index++ % max].SetValues(Fn, Ln, Nk, Ph, Ds);
     system("clear");
     std::cout << "+——————————————————————————————————————+" << std::endl;
     std::cout << "|      Contact Added Successfully      |" << std::endl;
