@@ -30,40 +30,40 @@ int Phonebook::AddContact( void ) {
     std::cout << "+—————————————————————————————————————————+" << std::endl;
     std::cout << "|          ↓ Insert First Name ↓          |" << std::endl;
     std::cout << "+—————————————————————————————————————————+" << std::endl;
-    std::getline(std::cin, Fn);
     std::cout << "→ ";
+    std::getline(std::cin, Fn);
     system("clear");
     if (std::cin.eof())
         return (2);
     std::cout << "+————————————————————————————————————————+" << std::endl;
     std::cout << "|          ↓ Insert Last Name ↓          |" << std::endl;
     std::cout << "+————————————————————————————————————————+" << std::endl;
-    std::getline(std::cin, Ln);
     std::cout << "→ ";
+    std::getline(std::cin, Ln);
     system("clear");
     if (std::cin.eof())
         return (2);
     std::cout << "+———————————————————————————————————————+" << std::endl;
     std::cout << "|          ↓ Insert Nickname ↓          |" << std::endl;
     std::cout << "+———————————————————————————————————————+" << std::endl;
-    std::getline(std::cin, Nk);
     std::cout << "→ ";
+    std::getline(std::cin, Nk);
     system("clear");
     if (std::cin.eof())
         return (2);
     std::cout << "+————————————————————————————————————————+" << std::endl;
     std::cout << "|         ↓ Insert Phonenumber ↓         |" << std::endl;
     std::cout << "+————————————————————————————————————————+" << std::endl;
-    std::getline(std::cin, Ph);
     std::cout << "→ ";
+    std::getline(std::cin, Ph);
     system("clear");
     if (std::cin.eof())
         return (2);
     std::cout << "+———————————————————————————————————————+" << std::endl;
     std::cout << "|       ↓ Insert Darkest Secret ↓       |" << std::endl;
     std::cout << "+———————————————————————————————————————+" << std::endl;
-    std::getline(std::cin, Ds);
     std::cout << "→ ";
+    std::getline(std::cin, Ds);
     system("clear");
     if (std::cin.eof())
         return (2);
@@ -149,9 +149,9 @@ int Phonebook::SearchList( void ) {
         val = checklist(index, intput_str);
         if (val == 1)
         {
-            this->Contacts[index].ShowContact();
+            val = this->Contacts[index].ShowContact();
             system("clear");
-            break;
+            return (val);
         }
         else if (val == 2)
             return (2);

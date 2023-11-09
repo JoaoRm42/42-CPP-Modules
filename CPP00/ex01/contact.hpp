@@ -31,5 +31,5 @@ class Contact {
         std::string GetPhone ( void );
         std::string GetDark ( void );
         std::string SetString( std::string str );
-        void ShowContact ( void );
+        int ShowContact ( void );
 };

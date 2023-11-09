@@ -47,27 +47,28 @@ std::string Contact::SetString(std::string str) {
     return (str);
 }
 
-void Contact::ShowContact() {
+int Contact::ShowContact() {
     std::string str;
     system("clear");
-    std::cout << "First Name: " << this->GetFirst() << std::endl;
-    std::cout << "Last Name: " << this->GetLast() << std::endl;
-    std::cout << "Nickname: " << this->GetNick() << std::endl;
-    std::cout << "Phonenumber: " << this->GetPhone() << std::endl;
-    std::cout << "Darkest Secret: " << this->GetDark() << std::endl;
+    std::cout << "+—————————————————————————————————————————+" << std::endl;
+    std::cout << "| First Name:     " << this->GetFirst() << "                       |" << std::endl;
+    std::cout << "| Last Name:      " << this->GetLast() << "                       |" << std::endl;
+    std::cout << "| Nickname:       " << this->GetNick() << "                       |" << std::endl;
+    std::cout << "| Phonenumber:    " << this->GetPhone() << "                       |" << std::endl;
+    std::cout << "| Darkest Secret: " << this->GetDark() << "                       |" << std::endl;
+    std::cout << "+—————————————————————————————————————————+" << std::endl;
     std::cout << std::endl;
-    std::cout << "Press Enter to continue" << std::endl;
+    std::cout << "Type EXIT to leave the contact information" << std::endl;
+    std::cout << "→ ";
     std::cin >> str;
-    if (str.empty())
+    while (1)
     {
-        system("clear");
-        return ;
+        if (str == "EXIT")
+            break;
+        else if (std::cin.eof())
+            return (2);
     }
-    else
-    {
-        system("clear");
-        return ;
-    }
+    return (0);
 }
 
 void Contact::setValues(std::string Fn, std::string Ln, std::string Nick, std::string Phone, std::string Ds) {
