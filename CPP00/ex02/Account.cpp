@@ -29,11 +29,11 @@ void Account::_displayTimestamp( void ) {
     t = std::time(NULL);
     datetime = std::localtime(&t);
     std::cout << "[" << datetime->tm_year + 1900;
-    std::cout << std::setfill('0') << std::setw(2) << datetime->tm_mon + 1;
-    std::cout << std::setfill('0') << std::setw(2) << datetime->tm_mday << "_";
-    std::cout << std::setfill('0') << std::setw(2) << datetime->tm_hour;
-    std::cout << std::setfill('0') << std::setw(2) << datetime->tm_min;
-    std::cout << std::setfill('0') << std::setw(2) << datetime->tm_sec << "] ";
+    std::cout << datetime->tm_mon + 1;
+    std::cout << datetime->tm_mday << "_";
+    std::cout << datetime->tm_hour;
+    std::cout << datetime->tm_min;
+    std::cout << datetime->tm_sec << "] ";
 }
 
 Account::Account( int initial_deposit ) {
