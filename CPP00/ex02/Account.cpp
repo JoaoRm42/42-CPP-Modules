@@ -42,8 +42,8 @@ Account::Account( int initial_deposit ) {
     _amount = initial_deposit;
     _totalAmount += initial_deposit;
     _displayTimestamp();
-    std::cout << "index:" << _accountIndex << ";amount:" << initial_deposit << ";created" << std::endl;
     _accountIndex = _nbAccounts;
+    std::cout << "index:" << _accountIndex << ";amount:" << initial_deposit << ";created" << std::endl;
     _nbAccounts++;
 }
 

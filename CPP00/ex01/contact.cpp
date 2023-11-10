@@ -44,29 +44,14 @@ std::string Contact::SetString(std::string str) {
     return (str);
 }
 
-std::string PadWithSpaces(const std::string& input, int maxLength) {
-    std::string padded, truncated;
-    if (input.length() <= maxLength)
-    {
-        int spacesToAdd = maxLength - input.length();
-        padded = input;
-        padded.append(spacesToAdd, ' ');
-        return padded;
-    }
-    else
-    {
-        truncated = input.substr(0, maxLength - 1) + '.';
-        return truncated;
-    }
-}
 
 void Contact::ContactShow( void ) {
     std::cout << "+—————————————————————————————————————————+" << std::endl;
-    std::cout << "| First Name:     " << PadWithSpaces(this->GetFirst(), 24) << "|" << std::endl;
-    std::cout << "| Last Name:      " << PadWithSpaces(this->GetLast(), 24) << "|" << std::endl;
-    std::cout << "| Nickname:       " << PadWithSpaces(this->GetNick(), 24) << "|" << std::endl;
-    std::cout << "| Phonenumber:    " << PadWithSpaces(this->GetPhone(), 24) << "|" << std::endl;
-    std::cout << "| Darkest Secret: " << PadWithSpaces(this->GetDark(), 24) << "|" << std::endl;
+    std::cout << "| First Name:     " << this->GetFirst() << std::endl;
+    std::cout << "| Last Name:      " << this->GetLast() << std::endl;
+    std::cout << "| Nickname:       " << this->GetNick() << std::endl;
+    std::cout << "| Phonenumber:    " << this->GetPhone() << std::endl;
+    std::cout << "| Darkest Secret: " << this->GetDark() << std::endl;
     std::cout << "+—————————————————————————————————————————+" << std::endl;
     std::cout << std::endl;
     std::cout << "Type EXIT to leave the contact information" << std::endl;
