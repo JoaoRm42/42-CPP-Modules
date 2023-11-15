@@ -18,8 +18,8 @@ std::string replacer(std::string buffer, std::string s1, std::string s2) {
         reader += s2;
         present += s1.size();
     }
-    reader.append(buffer, past, s2.size() - past);
-    return reader;
+    reader.append(buffer, past, buffer.size() - past);
+    return (reader);
 }
 
 int main( int ac, char **av ) {
@@ -27,8 +27,6 @@ int main( int ac, char **av ) {
         std::cout << "Error! There must be given the correct parameters!" << std::endl;
         return (0);
     }
-
-    //First we write av[2] and av[3] in av[1]
     std::ofstream outputFile;
     std::ifstream inputFile;
     std::string filename, s1, s2, buffer;
