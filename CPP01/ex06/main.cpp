@@ -9,7 +9,7 @@ int checkIndex(std::string level) {
     for (int j = 0; j < 4; j++)
         if (levels[j] == level)
             return (j);
-    return (5);
+    return (4);
 }
 
 void    checkLevel(Harl harl, std::string level) {
