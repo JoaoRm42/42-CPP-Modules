@@ -5,6 +5,8 @@
 #ifndef CPP_MODULES_42_POINT_HPP
 #define CPP_MODULES_42_POINT_HPP
 
+#include "Fixed.hpp"
+
 class Point {
     private:
         const Point x;
@@ -16,6 +18,8 @@ class Point {
         Point( const Point& cpy );
         Point& operator=(const Point& point);
         ~Point();
+        const float xCoord( void );
+        const float yCoord( void );
 };
 
 bool bsp( Point const a, Point const b, Point const c, Point const point);
