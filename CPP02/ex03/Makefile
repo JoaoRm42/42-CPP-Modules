@@ -1,7 +1,7 @@
-NAME	=	operators
+NAME	=	bsp
 CC		=	c++
 CFLAGS	=	-Wall -Werror -Wextra -g -std=c++98
-SRC		=	main.cpp Fixed.cpp
+SRC		=	main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
