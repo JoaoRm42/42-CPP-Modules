@@ -9,16 +9,16 @@
 
 class Point {
     private:
-        const Point x;
-        const Point y;
+        const Fixed x;
+        const Fixed y;
     public:
         Point( void );
         Point( const float num1, const float num2 );
         Point( const Point& cpy );
         Point& operator=(const Point& point);
         ~Point();
-        const float xCoord( void );
-        const float yCoord( void );
+        float xCoord( void ) const;
+        float yCoord( void ) const;
 };
 
 bool bsp( Point const a, Point const b, Point const c, Point const point);

@@ -13,10 +13,10 @@
 #include "Point.hpp"
 
 int main( void ) {
-    const Point a(2, 4);
-    const Point b(6, 3);
-    const Point c(4, 1);
-    const Point target(4, 3);
+    const Point a(10, 5);
+    const Point b(7, 3);
+    const Point c(2, 1);
+    const Point target(1, 1);
 
     if (bsp(a, b, c, target))
         std::cout << "It's inside" << std::endl;

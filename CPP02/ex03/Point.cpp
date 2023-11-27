@@ -26,10 +26,10 @@ Point::~Point() {
 
 }
 
-const float Point::xCoord( void ) {
+float Point::xCoord( void ) const {
     return (x.toFloat());
 }
 
-const float Point::yCoord( void ) {
+float Point::yCoord( void ) const {
     return (y.toFloat());
 }
