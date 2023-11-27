@@ -11,7 +11,6 @@ class Point {
     private:
         const Point x;
         const Point y;
-
     public:
         Point( void );
         Point( const float num1, const float num2 );
