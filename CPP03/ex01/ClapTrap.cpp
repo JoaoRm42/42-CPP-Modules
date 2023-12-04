@@ -72,7 +72,7 @@ void ClapTrap::beRapaired(unsigned int amount) {
 }
 
 ClapTrap::~ClapTrap() {
-    std::cout << "Destructor called" << std::endl;
+    std::cout << "ClapTrap Destructor called" << std::endl;
 }
 
 std::string ClapTrap::getName() const {
