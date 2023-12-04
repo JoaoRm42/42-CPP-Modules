@@ -8,7 +8,7 @@
 #include <iostream>
 
 class ClapTrap {
-    private:
+    protected:
         std::string Name;
         int hitPoints;
         int energyPoints;
@@ -27,7 +27,6 @@ class ClapTrap {
         int getHitPoints( void ) const;
         int getEnergyPoints( void ) const;
         int getAttackDamage( void ) const;
-        void giveDamage( unsigned int damage );
 };
 
 std::ostream &operator<<(std::ostream &out, const ClapTrap &teste);

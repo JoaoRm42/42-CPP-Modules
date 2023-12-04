@@ -11,5 +11,15 @@ int main() {
     std::cout << robot1 << std::endl;
     robot1.takeDamage(2);
     std::cout << robot1 << std::endl;
+    robot1.beRapaired(10);
+    std::cout<< robot1 << std::endl;
+    robot1.takeDamage(20);
+    std::cout << robot1 << std::endl;
+    robot1.attack("player3");
+    std::cout << robot1 << std::endl;
+    robot1.beRapaired(100);
+    std::cout << robot1 << std::endl;
+    robot1.takeDamage(30);
+    std::cout << robot1 << std::endl;
     return (0);
 }
