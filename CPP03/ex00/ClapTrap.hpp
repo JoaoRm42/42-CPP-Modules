@@ -23,9 +23,13 @@ class ClapTrap {
         void beRapaired( unsigned int amount);
 
         //Getters
+        void getName( void );
+        void getHitPoints( void );
+        void getEnergyPoints( void );
+        void getAttackDamage( void );
         void giveDamage( unsigned int damage );
-        void getDamage ( void );
 };
 
+std::ostream &operator<<(std::ostream &out, const ClapTrap &teste);
 
 #endif //CPP_MODULES_42_CLAPTRAP_HPP

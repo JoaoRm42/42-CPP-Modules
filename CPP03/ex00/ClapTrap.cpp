@@ -31,12 +31,30 @@ void ClapTrap::attack(const std::string &target) {
     std::cout << " attacks " << target;
     std::cout << " causing " << this->attackDamage;
     std::cout << " points of damage!" << std::endl;
+
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
-
+    std::cout << "ClapTrap " << this->Name;
+    std::cout << " has received " << amount;
+    std::cout << " points of damage!" << std::endl;
 }
 
 void ClapTrap::beRapaired(unsigned int amount) {
+    std::cout << "ClapTrap " << this->Name;
+    std::cout << " has been repaired " << amount;
+    std::cout << " health points" << std::endl;
+}
 
+ClapTrap::~ClapTrap() {
+    std::cout << "Destructor called" << std::endl;
+}
+
+std::ostream &operator<<(std::ostream &out, const ClapTrap &teste) {
+    out << std::endl;
+    out << "Name: " << teste.getName() << std::endl;
+    out << "Attack Damage: " << teste.getDamage() << std::endl;
+    out << "Energy left: " << teste.getEnergy() << std::endl;
+    out << "Life left: " << teste.getLife() << std::endl;
+    return out;
 }
