@@ -4,6 +4,14 @@
 
 #include "ScavTrap.hpp"
 
+ScavTrap::ScavTrap() {
+    this->_name = "joaoped2";
+    this->hitPoints = 100;
+    this->energyPoints = 50;
+    this->attackDamage = 20;
+    std::cout << "ScavTrap Default Constructor called" << std::endl;
+}
+
 ScavTrap::ScavTrap( std::string name ) : ClapTrap(name) {
     this->hitPoints = 100;
     this->energyPoints = 50;

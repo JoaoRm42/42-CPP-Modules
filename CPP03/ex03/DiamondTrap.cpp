@@ -4,6 +4,14 @@
 
 #include "DiamondTrap.hpp"
 
+DiamondTrap::DiamondTrap() {
+    this->_name = "joaoped2";
+    this->hitPoints = 100;
+    this->energyPoints = 50;
+    this->attackDamage = 30;
+    std::cout << "DiamondTrap Default Constructor Called" << std::endl;
+}
+
 DiamondTrap::DiamondTrap(std::string name) : ClapTrap(name + "_clap_name"), FragTrap(name), ScavTrap(name) {
     this->_name = name;
     this->hitPoints = 100;

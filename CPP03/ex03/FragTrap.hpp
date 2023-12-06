@@ -9,6 +9,7 @@
 
 class FragTrap: virtual public ClapTrap {
     public:
+        FragTrap();
         FragTrap( std::string );
         FragTrap( const FragTrap& frag );
         FragTrap& operator = ( const FragTrap& frag);

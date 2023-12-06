@@ -14,6 +14,7 @@ class ClapTrap {
         int energyPoints;
         int attackDamage;
     public:
+        ClapTrap();
         ClapTrap( std::string name);
         ClapTrap( const ClapTrap& cpy );
         ClapTrap& operator = ( const ClapTrap& claptrap );

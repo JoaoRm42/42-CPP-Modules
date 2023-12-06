@@ -4,7 +4,16 @@
 
 #include "FragTrap.hpp"
 
-FragTrap::FragTrap( std::string name) : ClapTrap(name) {
+FragTrap::FragTrap() {
+    this->_name = "joaoped2";
+    this->hitPoints = 100;
+    this->energyPoints = 100;
+    this->attackDamage = 30;
+    std::cout << "FragTrap Default Constructor called" << std::endl;
+}
+
+FragTrap::FragTrap( std::string name) : ClapTrap() {
+    this->_name = name;
     this->hitPoints = 100;
     this->energyPoints = 100;
     this->attackDamage = 30;
