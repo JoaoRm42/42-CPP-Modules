@@ -7,6 +7,7 @@
 int main() {
     DiamondTrap Diamond("player1");
 
+
     std::cout << "I'm the first one: " << Diamond << std::endl;
     Diamond.whoAmI();
     std::cout << std::endl;
