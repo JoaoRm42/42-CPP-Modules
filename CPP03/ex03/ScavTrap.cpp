@@ -17,7 +17,7 @@ ScavTrap::ScavTrap(const ScavTrap &scav) : ClapTrap(scav) {
 }
 
 ScavTrap &ScavTrap::operator=(const ScavTrap &scav) {
-    this->Name = scav.Name;
+    this->_name = scav._name;
     this->hitPoints = scav.hitPoints;
     this->energyPoints = scav.energyPoints;
     this->attackDamage = scav.attackDamage;
@@ -31,14 +31,14 @@ ScavTrap::~ScavTrap() {
 
 void ScavTrap::attack(const std::string& target) {
     if (this->energyPoints != 0 && this->hitPoints != 0) {
-        std::cout << "ScavTrap " << this->Name;
+        std::cout << "ScavTrap " << this->_name;
         std::cout << " attacks " << target;
         std::cout << " causing " << this->attackDamage;
         std::cout << " points of damage!" << std::endl;
         this->energyPoints -= 1;
     }
     else {
-        std::cout << "Cannot attack because " << this->Name;
+        std::cout << "Cannot attack because " << this->_name;
         std::cout << " is really weak!" << std::endl;
     }
 }

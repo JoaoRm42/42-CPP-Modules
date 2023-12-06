@@ -2,21 +2,29 @@
 // Created by joaoped2 on 11/29/23.
 //
 
-#include "ScavTrap.hpp"
-#include "FragTrap.hpp"
+#include "DiamondTrap.hpp"
 
 int main() {
-    ScavTrap Scav("player1");
-    FragTrap Frag("player2");
+    DiamondTrap Diamond("player1");
 
-    Scav.attack("player3");
-    Frag.attack("player4");
-    std::cout << "ScavTrap name: " << Scav.getName() << std::endl;
-    std::cout << "FragTrap name: " << Frag.getName() << std::endl;
-    std::cout << Scav << std::endl;
-    std::cout << Frag << std::endl;
-    Scav.guardGate();
-    Frag.highFivesGuys();
+    std::cout << "I'm the first one: " << Diamond << std::endl;
+    Diamond.whoAmI();
+    std::cout << std::endl;
+    Diamond.attack("player2");
+    Diamond.highFivesGuys();
+    std::cout << std::endl;
+
+//    ScavTrap Scav("player1");
+//    FragTrap Frag("player2");
+//
+//    Scav.attack("player3");
+//    Frag.attack("player4");
+//    std::cout << "ScavTrap name: " << Scav.getName() << std::endl;
+//    std::cout << "FragTrap name: " << Frag.getName() << std::endl;
+//    std::cout << Scav << std::endl;
+//    std::cout << Frag << std::endl;
+//    Scav.guardGate();
+//    Frag.highFivesGuys();
 
 //    ScavTrap teste("player1");
 //    teste.attack("player2");

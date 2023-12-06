@@ -17,7 +17,7 @@ FragTrap::FragTrap(const FragTrap &frag) : ClapTrap(frag) {
 }
 
 FragTrap &FragTrap::operator=(const FragTrap &frag) {
-    this->Name = frag.Name;
+    this->_name = frag._name;
     this->hitPoints = frag.hitPoints;
     this->energyPoints = frag.energyPoints;
     this->attackDamage = frag.attackDamage;
@@ -31,14 +31,14 @@ FragTrap::~FragTrap() {
 
 void FragTrap::attack(const std::string& target) {
     if (this->energyPoints != 0 && this->hitPoints != 0) {
-        std::cout << "FragTrap " << this->Name;
+        std::cout << "FragTrap " << this->_name;
         std::cout << " attacks " << target;
         std::cout << " causing " << this->attackDamage;
         std::cout << " points of damage!" << std::endl;
         this->energyPoints -= 1;
     }
     else {
-        std::cout << "Cannot attack because " << this->Name;
+        std::cout << "Cannot attack because " << this->_name;
         std::cout << " is really weak!" << std::endl;
     }
 }

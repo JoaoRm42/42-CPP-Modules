@@ -7,9 +7,7 @@
 
 #include "ClapTrap.hpp"
 
-class FragTrap: public ClapTrap {
-    private:
-
+class FragTrap: virtual public ClapTrap {
     public:
         FragTrap( std::string );
         FragTrap( const FragTrap& frag );

@@ -5,7 +5,7 @@
 #include "ClapTrap.hpp"
 
 ClapTrap::ClapTrap( std::string name ) {
-    this->Name = name;
+    this->_name = name;
     this->hitPoints = 10;
     this->energyPoints = 10;
     this->attackDamage = 0;
@@ -18,7 +18,7 @@ ClapTrap::ClapTrap(const ClapTrap &cpy) {
 }
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &claptrap) {
-    this->Name = claptrap.Name;
+    this->_name = claptrap._name;
     this->hitPoints = claptrap.hitPoints;
     this->energyPoints = claptrap.energyPoints;
     this->attackDamage = claptrap.attackDamage;
@@ -29,28 +29,28 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &claptrap) {
 void ClapTrap::attack(const std::string &target) {
 
     if (this->energyPoints != 0 && this->hitPoints != 0) {
-        std::cout << "ClapTrap " << this->Name;
+        std::cout << "ClapTrap " << this->_name;
         std::cout << " attacks " << target;
         std::cout << " causing " << this->attackDamage;
         std::cout << " points of damage!" << std::endl;
         this->energyPoints -= 1;
     }
     else {
-        std::cout << "Cannot attack because " << this->Name;
+        std::cout << "Cannot attack because " << this->_name;
         std::cout << " is really weak!" << std::endl;
     }
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
     if (this->energyPoints != 0 && this->hitPoints != 0) {
-        std::cout << "ClapTrap " << this->Name;
+        std::cout << "ClapTrap " << this->_name;
         std::cout << " has received " << amount;
         std::cout << " points of damage!" << std::endl;
 
         this->hitPoints -= amount;
     }
     else {
-        std::cout << "Cannot attack because " << this->Name;
+        std::cout << "Cannot attack because " << this->_name;
         std::cout << " is really weak!" << std::endl;
     }
     if (this->hitPoints < 0)
@@ -59,14 +59,14 @@ void ClapTrap::takeDamage(unsigned int amount) {
 
 void ClapTrap::beRapaired(unsigned int amount) {
     if (this->energyPoints != 0 && this->hitPoints != 0) {
-        std::cout << "ClapTrap " << this->Name;
+        std::cout << "ClapTrap " << this->_name;
         std::cout << " has been repaired " << amount;
         std::cout << " health points" << std::endl;
         this->hitPoints += amount;
         this->energyPoints -= 1;
     }
     else {
-        std::cout << "Cannot attack because " << this->Name;
+        std::cout << "Cannot attack because " << this->_name;
         std::cout << " is really weak!" << std::endl;
     }
 }
@@ -76,7 +76,7 @@ ClapTrap::~ClapTrap() {
 }
 
 std::string ClapTrap::getName() const {
-    return (this->Name);
+    return (this->_name);
 }
 
 int ClapTrap::getHitPoints() const {
