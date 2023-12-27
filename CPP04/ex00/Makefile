@@ -1,7 +1,7 @@
 NAME	=	polymorphism
 CXX		=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -g -std=c++98
-SRC		=	main.cpp ClapTrap.cpp
+SRC		=	main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)

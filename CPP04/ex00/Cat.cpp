@@ -22,12 +22,13 @@ Cat::Cat(const Cat &cpy) {
 Cat &Cat::operator=(const Cat &cat) {
     this->type = cat.type;
     std::cout << "Cat Copy Assignment Contructor Called" << std::endl;
+    return (*this);
 }
 
 Cat::~Cat() {
     std::cout << "Cat Destructor Called" << std::endl;
 }
 
-const void Cat::makeSound() {
+void Cat::makeSound() const {
     std::cout << "miaow" << std::endl;
 }

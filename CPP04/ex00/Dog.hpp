@@ -14,7 +14,7 @@ class Dog: public Animal {
         Dog(const Dog& cpy);
         Dog& operator = (const Dog& dog);
         ~Dog();
-        const void makeSound();
+        void makeSound() const;
 };
 
 

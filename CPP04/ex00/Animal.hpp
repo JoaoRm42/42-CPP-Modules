@@ -6,8 +6,6 @@
 #define CPP_MODULES_42_ANIMAL_HPP
 
 #include <iostream>
-#include "Cat.hpp"
-#include "Dog.hpp"
 
 class Animal {
     protected:
@@ -20,7 +18,7 @@ class Animal {
         virtual ~Animal();
         void setType(std::string type);
         std::string getType() const;
-        virtual const void makeSound();
+        virtual void makeSound() const;
 };
 
 #endif //CPP_MODULES_42_ANIMAL_HPP

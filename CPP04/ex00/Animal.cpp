@@ -4,7 +4,8 @@
 
 #include "Animal.hpp"
 
-Animal::Animal() : type("Default") {
+Animal::Animal() {
+    this->type = "Default";
     std::cout << "Animal Default Constructor Called" << std::endl;
 }
 
@@ -20,6 +21,11 @@ Animal::Animal(const Animal &cpy) {
 Animal &Animal::operator=(const Animal &animal) {
     this->type = animal.type;
     std::cout << "Animal Copy assignment operator called" << std::endl;
+    return (*this);
+}
+
+Animal::~Animal() {
+    std::cout << "Animal Virtual Destructor Called" << std::endl;
 }
 
 std::string Animal::getType() const {
@@ -30,6 +36,6 @@ void Animal::setType(std::string type) {
     this->type = type;
 }
 
-const void Animal::makeSound() {
+void Animal::makeSound() const {
     std::cout << "Random Alien Sound" << std::endl;
 }

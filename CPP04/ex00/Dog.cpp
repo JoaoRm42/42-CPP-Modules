@@ -6,12 +6,12 @@
 
 Dog::Dog() {
     this->type = "Dog";
-    std::cout << "Default Dog Constructor Called" << std::endl;
+    std::cout << "Dog Default Constructor Called" << std::endl;
 }
 
 Dog::Dog(std::string type) {
     this->type = type;
-    std::cout << "Parameter Dog Constructor Called" << std::endl;
+    std::cout << " Dog Parameter Constructor Called" << std::endl;
 }
 
 Dog::Dog(const Dog &cpy) {
@@ -22,12 +22,13 @@ Dog::Dog(const Dog &cpy) {
 Dog &Dog::operator=(const Dog &dog) {
     this->type = dog.type;
     std::cout << "Dog Copy Assignment Constructor called" << std::endl;
+    return (*this);
 }
 
 Dog::~Dog() {
     std::cout << "Dog Destructor called" << std::endl;
 }
 
-const void Dog::makeSound() {
+void Dog::makeSound() const {
     std::cout << "bark" << std::endl;
 }

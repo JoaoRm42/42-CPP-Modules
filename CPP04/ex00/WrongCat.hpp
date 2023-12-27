@@ -5,9 +5,16 @@
 #ifndef CPP_MODULES_42_WRONGCAT_HPP
 #define CPP_MODULES_42_WRONGCAT_HPP
 
+#include "WrongAnimal.hpp"
 
-class WrongCat {
-
+class WrongCat : public WrongAnimal {
+    public:
+        WrongCat();
+        WrongCat(std::string type);
+        WrongCat(const WrongCat& cpy);
+        WrongCat& operator = (const WrongCat& cpy);
+        ~WrongCat();
+        void makeSound() const;
 };
 
 
