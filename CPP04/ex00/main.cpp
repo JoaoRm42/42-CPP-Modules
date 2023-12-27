@@ -21,5 +21,22 @@ int main()
     delete i;
     delete j;
     delete meta;
+
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+
+    const WrongAnimal* meta1 = new WrongAnimal();
+    const Animal* k = new Dog();
+    const WrongAnimal* l = new WrongCat();
+    std::cout << k->getType() << " " << std::endl;
+    std::cout << l->getType() << " " << std::endl;
+    l->makeSound(); //will output the cat sound!
+    k->makeSound();
+    meta1->makeSound();
+    delete l;
+    delete k;
+    delete meta1;
+
     return 0;
 }
