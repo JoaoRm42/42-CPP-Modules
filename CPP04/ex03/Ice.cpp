@@ -3,3 +3,29 @@
 //
 
 #include "Ice.hpp"
+
+Ice::Ice() {
+    std::cout << "Ice Default Constructor Called" << std::endl;
+}
+
+Ice::Ice(const Ice &cpy) {
+    *this = cpy;
+    std::cout << "Ice Copy Constructor Called" << std::endl;
+}
+
+Ice &Ice::operator=(const Ice &cpy) {
+    std::cout << "Ice Copy Assignment Constructor Called" << std::endl;
+    return (*this);
+}
+
+Ice::~Ice() {
+    std::cout << "Ice Destructor Called" << std::endl;
+}
+
+AMateria* Ice::clone() const {
+    return (new Ice(*this));
+}
+
+void Ice::use(ICharacter &target) {
+    std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+}

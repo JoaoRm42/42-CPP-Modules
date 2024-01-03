@@ -5,6 +5,9 @@
 #ifndef CPP_MODULES_42_IMATERIASOURCE_HPP
 #define CPP_MODULES_42_IMATERIASOURCE_HPP
 
+#include "AMateria.hpp"
+
+class AMateria;
 
 class IMateriaSource {
     public:

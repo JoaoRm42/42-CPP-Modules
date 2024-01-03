@@ -5,16 +5,18 @@
 #ifndef CPP_MODULES_42_AMATERIA_HPP
 #define CPP_MODULES_42_AMATERIA_HPP
 
+#include <iostream>
+#include "ICharacter.hpp"
 
 class AMateria {
     protected:
-
+        std::string type;
     public:
         AMateria();
         AMateria(std::string const & type);
         AMateria(const AMateria& cpy);
         AMateria& operator = (const AMateria& cpy);
-        ~AMateria();
+        virtual ~AMateria();
 
         //Utility Functions
         std::string const & getType() const; //Returns the materia type

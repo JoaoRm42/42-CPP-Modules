@@ -5,6 +5,9 @@
 #ifndef CPP_MODULES_42_ICHARACTER_HPP
 #define CPP_MODULES_42_ICHARACTER_HPP
 
+#include "AMateria.hpp"
+
+class AMateria;
 
 class ICharacter {
     public:

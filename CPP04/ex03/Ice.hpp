@@ -5,9 +5,17 @@
 #ifndef CPP_MODULES_42_ICE_HPP
 #define CPP_MODULES_42_ICE_HPP
 
+#include "AMateria.hpp"
+#include <iostream>
 
-class Ice {
-
+class Ice: public AMateria {
+    public:
+        Ice();
+        Ice(const Ice& cpy);
+        Ice& operator = (const Ice& cpy);
+        ~Ice();
+        AMateria* clone() const;
+        void use(ICharacter& target);
 };
 
 
