@@ -23,7 +23,7 @@ class Character: public ICharacter {
         void equip(AMateria* spell);
         void unequip(int index);
         void use(int index, ICharacter& target);
-        std::string const& getTarget()const;
+        std::string const& getName()const;
 };
 
 

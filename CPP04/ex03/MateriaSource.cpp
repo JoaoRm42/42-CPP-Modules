@@ -9,7 +9,7 @@ MateriaSource::MateriaSource() {
     for(int i = 0; i < 4; i++) {
         this->spells[i] = NULL;
     }
-    std::cout << "MateriaSource Default Constructor Called" << std::endl;
+//    std::cout << "MateriaSource Default Constructor Called" << std::endl;
 }
 
 MateriaSource::MateriaSource(const MateriaSource &cpy) {
@@ -17,7 +17,7 @@ MateriaSource::MateriaSource(const MateriaSource &cpy) {
     for(int i = 0; i < 4; i++) {
         this->spells[i] = cpy.spells[i];
     }
-    std::cout << "MateriaSource Copy Constructor Called" << std::endl;
+//    std::cout << "MateriaSource Copy Constructor Called" << std::endl;
 }
 
 MateriaSource &MateriaSource::operator=(const MateriaSource &cpy) {
@@ -26,7 +26,7 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &cpy) {
     for(int i = 0; i < 4; i++) {
         this->spells[i] = cpy.spells[i];
     }
-    std::cout << "MateriaSource Copy Assignment Constructor Called" << std::endl;
+//    std::cout << "MateriaSource Copy Assignment Constructor Called" << std::endl;
     return (*this);
 }
 
@@ -34,7 +34,7 @@ MateriaSource::~MateriaSource() {
     for(int i = 0; i < this->index; i++) {
         delete (this->spells[i]);
     }
-    std::cout << "MateriaSource Destructor Called" << std::endl;
+//    std::cout << "MateriaSource Destructor Called" << std::endl;
 }
 
 void MateriaSource::learnMateria(AMateria *learn) {

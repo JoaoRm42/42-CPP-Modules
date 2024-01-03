@@ -11,7 +11,7 @@ Character::Character() {
         this->inventory[i] = NULL;
         this->drop[i] = NULL;
     }
-    std::cout << "Character Default Constructor Called" << std::endl;
+//    std::cout << "Character Default Constructor Called" << std::endl;
 }
 
 Character::Character(std::string name) {
@@ -21,16 +21,16 @@ Character::Character(std::string name) {
         this->inventory[i] = NULL;
         this->drop[i] = NULL;
     }
-    std::cout << "Character Parameter Constructor Called" << std::endl;
+//    std::cout << "Character Parameter Constructor Called" << std::endl;
 }
 
 Character::Character(const Character &cpy) {
     *this = cpy;
-    std::cout << "Character Copy Constructor Called" << std::endl;
+//    std::cout << "Character Copy Constructor Called" << std::endl;
 }
 
 Character &Character::operator=(const Character &cpy) {
-    if (*this == &obj)
+    if (this == &cpy)
         return (*this);
     this->name = cpy.name;
     this->index = cpy.index;
@@ -44,7 +44,7 @@ Character &Character::operator=(const Character &cpy) {
         if (cpy.drop[i])
             this->drop[i] = cpy.drop[i]->clone();
     }
-    std::cout << "Character Copy Assignment Constructor Called" << std::endl;
+//    std::cout << "Character Copy Assignment Constructor Called" << std::endl;
     return (*this);
 }
 
@@ -55,7 +55,7 @@ Character::~Character() {
         if (this->drop[i] != NULL)
             delete(this->drop[i]);
     }
-    std::cout << "Character Destructor Called" << std::endl;
+//    std::cout << "Character Destructor Called" << std::endl;
 }
 
 void Character::equip(AMateria *spell) {
@@ -79,7 +79,7 @@ void Character::unequip(int index) {
     this->drop[index] = this->inventory[index];
     this->inventory[index] = NULL;
     std::cout << this->name << " dropped " << this->drop[index]->getType() << std::endl;
-    std::cout << "The memory of the spell dropped is " << this->drop[index] << std::endl;
+//    std::cout << "The memory of the spell dropped is " << this->drop[index] << std::endl;
     this->index--;
 }
 

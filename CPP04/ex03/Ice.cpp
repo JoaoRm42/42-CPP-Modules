@@ -4,22 +4,24 @@
 
 #include "Ice.hpp"
 
-Ice::Ice() {
-    std::cout << "Ice Default Constructor Called" << std::endl;
+Ice::Ice() : AMateria("ice") {
+//    std::cout << "Ice Default Constructor Called" << std::endl;
 }
 
-Ice::Ice(const Ice &cpy) {
-    *this = cpy;
-    std::cout << "Ice Copy Constructor Called" << std::endl;
+Ice::Ice(const Ice &cpy) : AMateria(cpy) {
+//    std::cout << "Ice Copy Constructor Called" << std::endl;
 }
 
 Ice &Ice::operator=(const Ice &cpy) {
-    std::cout << "Ice Copy Assignment Constructor Called" << std::endl;
+    if (this == &cpy)
+        return (*this);
+    this->type = cpy.type;
+//    std::cout << "Ice Copy Assignment Constructor Called" << std::endl;
     return (*this);
 }
 
 Ice::~Ice() {
-    std::cout << "Ice Destructor Called" << std::endl;
+//    std::cout << "Ice Destructor Called" << std::endl;
 }
 
 AMateria* Ice::clone() const {

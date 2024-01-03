@@ -4,22 +4,24 @@
 
 #include "Cure.hpp"
 
-Cure::Cure() {
-    std::cout << "Cure Default Constructor Called" << std::endl;
+Cure::Cure() : AMateria("cure"){
+//    std::cout << "Cure Default Constructor Called" << std::endl;
 }
 
-Cure::Cure(const Cure &cpy) {
-    *this = cpy;
-    std::cout << "Cure Copy Constructor Called" << std::endl;
+Cure::Cure(const Cure &cpy) : AMateria(cpy) {
+//    std::cout << "Cure Copy Constructor Called" << std::endl;
 }
 
 Cure &Cure::operator=(const Cure &cpy) {
-    std::cout << "Cure Copy Assignment Constructor Called" << std::endl;
+    if (this == &cpy)
+        return (*this);
+    this->type = cpy.type;
+//    std::cout << "Cure Copy Assignment Constructor Called" << std::endl;
     return (*this);
 }
 
 Cure::~Cure(){
-    std::cout << "Cure Destructor Called" << std::endl;
+//    std::cout << "Cure Destructor Called" << std::endl;
 }
 
 AMateria* Cure::clone() const {
