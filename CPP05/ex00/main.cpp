@@ -5,36 +5,36 @@
 #include "Bureaucrat.hpp"
 
 int main() {
-    Bureaucrat one;
-    Bureaucrat two("Segundo", 1);
+    Bureaucrat Porto;
+    Bureaucrat Lisboa("Lisboa", 1);
 
-    std::cout << one << std::endl;
-    std::cout << two << std::endl;
+    std::cout << Porto << std::endl;
+    std::cout << Lisboa << std::endl;
 
     try{
-        two.increaseGrade();
+        Lisboa.increaseGrade();
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
-    two.decreaseGrade();
-    std::cout << two << std::endl;
+    Lisboa.decreaseGrade();
+    std::cout << Lisboa << std::endl;
 
     try{
-        one.decreaseGrade();
+        Porto.decreaseGrade();
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
-    one.increaseGrade();
-    std::cout << one << std::endl;
+    Porto.increaseGrade();
+    std::cout << Porto << std::endl;
 
     try{
-        Bureaucrat("test", -150);
+        Bureaucrat("wrong", -150);
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
 
     try{
-        Bureaucrat("Test", 1500);
+        Bureaucrat("Wrong", 1500);
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }

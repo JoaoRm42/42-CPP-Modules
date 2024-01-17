@@ -5,53 +5,46 @@
 #include "Bureaucrat.hpp"
 
 int main() {
-    Bureaucrat	one;
-    Bureaucrat	two("Segundo", 1);
-    Bureaucrat	three("Terceiro", 75);
-    Form		carta("Conducao", 1, 100);
-    Form		carta2("tratado", 20, 100);
-    Form		carta3("tratado2", 80, 100);
+    Bureaucrat	Porto;
+    Bureaucrat	Lisboa("lisboa", 1);
+    Bureaucrat	Faro("porto", 75);
+    Form		exam1("exam1", 1, 100);
+    Form		exam2("exam2", 20, 100);
+    Form		exam3("exam3", 80, 100);
 
-    std::cout << one << std::endl;
-    std::cout << two << std::endl;
-    std::cout << three << std::endl;
-    std::cout << carta << std::endl;
-    carta.beSigned(two);
-    std::cout << carta << std::endl;
-    two.signForm(carta);
-    std::cout << carta2 << std::endl;
-    two.signForm(carta2);
-    std::cout << carta2 << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
+    std::cout << Porto << std::endl;
+    std::cout << Lisboa << std::endl;
+    std::cout << Faro << std::endl;
+    std::cout << exam1 << std::endl;
+    exam1.beSigned(Lisboa);
+    Lisboa.signForm(exam1);
+    Lisboa.signForm(exam2);
     std::cout << std::endl;
     std::cout << std::endl;
 
     try{
-        three.signForm(carta2);
+        Faro.signForm(exam2);
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
     try{
-        one.signForm(carta);
+        Porto.signForm(exam1);
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
-    std::cout << carta3 << std::endl;
+    std::cout << exam3 << std::endl;
     try{
-        three.signForm(carta3);
+        Faro.signForm(exam3);
     } catch (std::exception &t) {
         std::cout << t.what() << std::endl;
     }
-    std::cout << carta3 << std::endl;
-    std::cout << std::endl;
-    std::cout << std::endl;
+    std::cout << exam3 << std::endl;
     std::cout << std::endl;
     std::cout << std::endl;
     try{
-        Bureaucrat	four("Quarto", 0);
+        Bureaucrat	Madeira("Madeira", 0);
         try{
-            four.signForm(carta2);
+            Madeira.signForm(exam2);
         } catch (std::exception &t) {
             std::cout << t.what() << std::endl;
         }
@@ -59,9 +52,9 @@ int main() {
         std::cout << t.what() << std::endl;
     }
     try{
-        Bureaucrat	four("Quarto", 155);
+        Bureaucrat	Madeira("Madeira", 155);
         try{
-            four.signForm(carta2);
+            Madeira.signForm(exam2);
         } catch (std::exception &t) {
             std::cout << t.what() << std::endl;
         }
