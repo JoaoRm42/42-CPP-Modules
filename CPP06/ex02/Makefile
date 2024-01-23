@@ -1,7 +1,7 @@
-NAME	=	scalarconverter
+NAME	=	realtype
 CXX		=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -g -std=c++98
-SRC		=	main.cpp ScalarConverter.cpp
+SRC		=	main.cpp Base.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
