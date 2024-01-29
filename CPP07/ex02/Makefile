@@ -1,7 +1,7 @@
-NAME	=	scalarconverter
+NAME	=	array
 CXX		=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -g -std=c++98
-SRC		=	main.cpp ScalarConverter.cpp
+SRC		=	main.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
