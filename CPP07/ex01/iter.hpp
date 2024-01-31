@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-template <typename T>
+template <typename T> //typename T, typename Y
 void iter(T *array, int len, void (*f)(T& element)){
     for (int i = 0; i < len; i++) {
         f(array[i]);
