@@ -1,0 +1,8 @@
+//
+// Created by Neddy on 07/02/2024.
+//
+
+#ifndef CPP_MODULES_42_MUTANTSTACK_HPP
+#define CPP_MODULES_42_MUTANTSTACK_HPP
+
+#endif //CPP_MODULES_42_MUTANTSTACK_HPP
