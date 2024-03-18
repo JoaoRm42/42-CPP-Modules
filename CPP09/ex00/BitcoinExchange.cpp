@@ -35,3 +35,18 @@ std::string BitcoinExchange::getNameFile() {
     return (_fdOut);
 }
 
+void BitcoinExchange::printBTCMap() {
+    std::map<std::string, float>::iterator it;
+    for (it = btc.begin(); it != btc.end(); ++it) {
+        std::cout << it->first << "," << std::setprecision(7) << it->second << std::endl;
+    }
+}
+
+bool BitcoinExchange::checkerDigits(const std::string &name) {
+    for (size_t i = 0; i < name.length(); ++i) {
+        if (!checkerDigits(name[i])) {
+            return false;
+        }
+    }
+    return true;
+}
