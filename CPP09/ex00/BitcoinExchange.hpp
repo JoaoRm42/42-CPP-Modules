@@ -29,7 +29,8 @@ class BitcoinExchange {
 
         void printBTCMap();
 
-        bool checkerDigits(const std::string &name);
+//        bool checkerDigits(const std::string& string);
+        bool checkerDigits(const std::string& str);
         bool checkerLeapYear(int year);
         void checkerInput();
         void checkerLine(std::string &line);
@@ -41,7 +42,20 @@ class BitcoinExchange {
         bool checkerValue(std::string &line, std::string &date);
 
         void csvReader();
-        void BTCValueConverter();
+        void BTCValueConverter(std::string& date, std::string& value);
+
+        class CantOpenFileException : public std::exception {
+            public:
+                virtual const char *what() const throw() {
+                    return ("Exception: Can't open file!");
+                }
+        };
+        class FormatException : public std::exception {
+            public:
+                virtual const char *what() const throw() {
+                    return ("Exception: Incorrect format at the beginning of the file!");
+                }
+        };
 };
 
 
