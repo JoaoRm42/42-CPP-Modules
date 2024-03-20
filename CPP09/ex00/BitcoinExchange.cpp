@@ -42,21 +42,12 @@ void BitcoinExchange::printBTCMap() {
     }
 }
 
-//bool BitcoinExchange::checkerDigits(const std::string& str) {
-//    for (size_t i = 0; i < str.length(); ++i) {
-//        if (!checkerDigits(str[i])) {
-//            return (false);
-//        }
-//    }
-//    return (true);
-//}
-
 bool BitcoinExchange::checkerDigits(const std::string& str)
 {
     for (size_t i = 0; i < str.length(); ++i)
         if (!isdigit(str[i]))
-            return false;
-    return true;
+            return (false);
+    return (true);
 }
 
 bool BitcoinExchange::checkerLeapYear(int year) {
@@ -79,6 +70,7 @@ void BitcoinExchange::csvReader() {
 
         std::string date;
         float btc_value;
+        std::getline(isString, date, ',');
         isString >> btc_value;
         btc[date] = btc_value;
     }
@@ -87,7 +79,7 @@ void BitcoinExchange::csvReader() {
 }
 
 void BitcoinExchange::checkerInput() {
-    std::ifstream openfile("data.csv");
+    std::ifstream openfile(this->_fdOut.c_str());
     if (!openfile.is_open()) {
         throw CantOpenFileException();
     }
@@ -96,7 +88,7 @@ void BitcoinExchange::checkerInput() {
     if (!std::getline(openfile, reader)) {
         return ;
     }
-    if (reader != "data | value") {
+    if (reader != "date | value") {
         throw FormatException();
     }
     while (std::getline(openfile, reader)) {
@@ -223,55 +215,106 @@ bool BitcoinExchange::checkerDay(std::string &year, std::string &month, std::str
     return (true);
 }
 
-bool BitcoinExchange::checkerValue(std::string &line, std::string &date) {
-    size_t position = line.find('|');
+//bool BitcoinExchange::checkerValue(std::string &line, std::string &date) {
+//    size_t position = line.find('|');
+//
+//    std::string value = line.substr(position + 1);
+//
+//    value.erase(std::remove_if(value.begin(), value.end(), ::isspace), value.end());
+//
+//    if (value.length() <= 0) {
+//        std::cout << "Error: No correct Value" << std::endl;
+//        return (false);
+//    }
+//
+//    float numValue = atof(value.c_str());
+//
+//    if (numValue < 0.0) {
+//        std::cout << "Error: number is not positive!" << std::endl;
+//        return (false);
+//    }
+//
+//    if (numValue > 1000.0) {
+//        std::cout << "Error: Number is too big" << std::endl;
+//        return (false);
+//    }
+//
+//    int countdots = 0;
+//
+//    for (size_t i = 0; i < value.length(); i++) {
+//        if (!checkerDigits(value[i]) && value[i] != '.') {
+//            std::cout << "Error!" << line << std::endl;
+//            return (false);
+//        }
+//
+//        if (value[i] == '.')
+//            countdots++;
+//    }
+//
+//    if (countdots > 1 || !checkerDigits(value[0])) {
+//        std::cout << "Error!" << line << std::endl;
+//        return (false);
+//    }
+//
+//    size_t dotsPosition = value.find('.');
+//    if (dotsPosition != std::string::npos && !checkerDigits(value[dotsPosition + 1])) {
+//        std::cout << "Error!" << line <<std::endl;
+//        return (false);
+//    }
+//
+//    BTCValueConverter(date, value);
+//    return (true);
+//}
 
-    std::string value = line.substr(position + 1);
+bool	BitcoinExchange::checkerValue(std::string& line, std::string& date)
+{
+    size_t pos = line.find('|');
 
+    std::string value = line.substr(pos + 1);
+    // Remove all whitespaces
     value.erase(std::remove_if(value.begin(), value.end(), ::isspace), value.end());
 
-    if (value.length() <= 0) {
-        std::cout << "Error: No correct Value" << std::endl;
-        return (false);
+    if(value.length() <= 0)
+    {
+        std::cout << "Error(5): bad input => " << line << std::endl;
+        return false;
     }
-
     float numValue = atof(value.c_str());
-
-    if (numValue < 0.0) {
-        std::cout << "Error: number is not positive!" << std::endl;
-        return (false);
+    if (numValue < 0.0)
+    {
+        std::cout << "Error: not a positive number." << std::endl;
+        return false;
     }
-
-    if (numValue > 1000.0) {
-        std::cout << "Error: Number is too big" << std::endl;
-        return (false);
+    if (numValue > 1000.0)
+    {
+        std::cout << "Error: too large a number." << std::endl;
+        return false;
     }
-
-    int countdots = 0;
-
-    for (size_t i = 0; i < value.length(); i++) {
-        if (!checkerDigits(value[i]) && value[i] != '.') {
-            std::cout << "Error!" << line << std::endl;
-            return (false);
+    int dotCount = 0;
+    for (size_t i = 0; i < value.length(); i++)
+    {
+        if (!isdigit(value[i]) && value[i] != '.')
+        {
+            std::cout << "Error(6): bad input => " << line << std::endl;
+            return false;
         }
-
-        if (value[i] == '.')
-            countdots++;
+        if(value[i] == '.')
+            dotCount++;
     }
-
-    if (countdots > 1 || !checkerDigits(value[0])) {
-        std::cout << "Error!" << line << std::endl;
-        return (false);
+    if (dotCount > 1 || !isdigit(value[0]))
+    {
+        std::cout << "Error(7): bad input => " << line << std::endl;
+        return false;
     }
-
-    size_t dotsPosition = value.find('.');
-    if (dotsPosition != std::string::npos && !checkerDigits(value[dotsPosition + 1])) {
-        std::cout << "Error!" << line <<std::endl;
-        return (false);
+    size_t dotPos = value.find('.');
+    if(dotPos != std::string::npos && !isdigit(value[dotPos + 1]))
+    {
+        std::cout << "Error(8): bad input => " << line << std::endl;
+        return false;
     }
 
     BTCValueConverter(date, value);
-    return (true);
+    return true;
 }
 
 void BitcoinExchange::BTCValueConverter(std::string& date, std::string& value) {
