@@ -1,7 +1,7 @@
-NAME	=	span
+NAME	=	btc
 CXX		=	c++
 CXXFLAGS	=	-Wall -Werror -Wextra -g -std=c++98
-SRC		=	main.cpp Span.cpp
+SRC		=	main.cpp BitcoinExchange.cpp
 OBJ		=	$(SRC:.cpp=.o)
 
 all: $(NAME)
