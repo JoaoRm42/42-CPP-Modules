@@ -5,6 +5,12 @@
 #ifndef CPP_MODULES_42_RPN_HPP
 #define CPP_MODULES_42_RPN_HPP
 
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+#include <fstream>
+#include <sstream>
+#include <stack>
 
 class RPN {
     private:
