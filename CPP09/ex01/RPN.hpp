@@ -32,7 +32,9 @@ class RPN {
         class WrongExpressionException : public std::exception
         {
             public:
-                virtual const char *what() const throw(){return "Exception: Incorrect expression!\nPlease try again!";}
+                virtual const char *what() const throw() {
+                    return ("Exception: Incorrect expression!");
+                }
         };
 
 };
