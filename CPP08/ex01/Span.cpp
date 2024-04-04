@@ -39,31 +39,30 @@ int Span::shortestSpan() {
     if (container.size() <= 1)
         throw NotEnoughElements();
 
-    int min = std::numeric_limits<int>::max();
+    int max = std::numeric_limits<int>::max();
+
     for (std::vector<int>::iterator it = container.begin(); it != container.end(); it++) {
         for (std::vector<int>::iterator it2 = container.begin(); it2 != container.end(); it2++) {
             if (it == it2)
                 continue ;
-            if (std::abs(*it - *it2) < min) {
-                min = std::abs(*it - *it2);
-                a = *it;
-                b = *it2;
-            }
+            if (std::abs(*it - *it2) < max)
+                max = std::abs(*it - *it2);
         }
     }
-    return (min);
+    return (max);
 }
 
 int Span::longestSpan() {
+    int min, max, result;
     if (container.size() <= 1)
         throw NotEnoughElements();
 
     std::vector<int> sorting = container;
     std::sort(sorting.begin(), sorting.end());
 
-    int min = sorting.front();
-    int max = sorting.back();
-    int result = max - min;
+    min = sorting.front();
+    max = sorting.back();
+    result = max - min;
 
     return (result);
 }

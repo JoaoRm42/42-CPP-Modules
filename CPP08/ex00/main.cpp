@@ -18,7 +18,7 @@ int main() {
         container.push_back(5);
         container.insert(container.begin() + 5, 6);
 
-        easyfind(container, 5);
+        easyfind(container, 6);
         for (size_t i = 0; i < container.size(); ++i) {
             std::cout << container[i] << " ";
         }

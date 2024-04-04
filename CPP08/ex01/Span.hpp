@@ -17,7 +17,6 @@ class Span {
     private:
         unsigned int _N;
         std::vector<int> container;
-        int a, b;
     public:
         Span();
         Span(unsigned int n);
