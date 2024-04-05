@@ -8,39 +8,35 @@
 # include <iostream>
 # include <stack>
 # include <deque>
+# include <list>
+# include <algorithm>
 
-template< typename T, class Container = std::deque< T > >
-class MutantStack : public std::stack< T, Container >
+template<typename T, class Container = std::deque<T> >
+class MutantStack : public std::stack<T, Container>
 {
+    private:
 
-private:
+    public:
+        MutantStack() {};
+        ~MutantStack() {};
 
-public:
-    MutantStack() {};
-    ~MutantStack() {};
-
-    MutantStack( const MutantStack& src )
-    {
-        *this = src;
-    }
-    MutantStack&    operator=( const MutantStack& rhs )
-    {
-        if ( this != &rhs )
-        {
-            std::stack< T, Container >::operator=( this, rhs );
+        MutantStack(const MutantStack& src) {
+            *this = src;
         }
-        return *this;
-    }
+        MutantStack &operator=(const MutantStack& rhs) {
+            if (this != &rhs) {
+                std::stack<T, Container>::operator=(this, rhs);
+            }
+            return (*this);
+        }
 
-    typedef typename Container::iterator    iterator;
-    iterator    begin( void )
-    {
-        return this->c.begin();
-    }
-    iterator    end( void )
-    {
-        return this->c.end();
-    }
+        typedef typename Container::iterator iterator;
+        iterator begin(void) {
+            return (this->c.begin());
+        }
+        iterator end(void) {
+            return (this->c.end());
+        }
 };
 
 #endif //CPP_MODULES_42_MUTANTSTACK_HPP
