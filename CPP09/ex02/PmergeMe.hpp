@@ -28,7 +28,9 @@ class PmergeMe {
         ~PmergeMe();
 
         void sortCont();
-        void printDeque();
+        void printVec();
+        void mergeVec(std::vector<int> &vector);
+        void sortMergeVec(std::vector<int> &left, std::vector<int> &right, std::vector<int> &vector);
         void mergeDec(std::deque<int> &vector);
         void sortMergeDec(std::deque<int> &left, std::deque<int> &right, std::deque<int> &vector);
 };

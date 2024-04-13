@@ -34,22 +34,78 @@ PmergeMe::~PmergeMe() {
 
 }
 
-void PmergeMe::printDeque() {
-    std::deque<int>::iterator it;
+void	PmergeMe::printVec(void)
+{
+    std::vector<int>::iterator it;
     std::cout << "After: ";
-    for (it = _deq.begin(); it < _deq.end(); it++) {
+    for(it = _vec.begin(); it < _vec.end(); it++)
         std::cout << *it << " ";
-    }
     std::cout << std::endl;
 }
 
 void PmergeMe::sortCont() {
+    clock_t startV = clock();
+    mergeVec(_vec);//algorithm for vector
+    clock_t endV = clock();
+    double timeV = 1000.0 * (endV - startV) / CLOCKS_PER_SEC;  // Convert to microseconds
+    printVec();
+    std::cout << "Time to process a range of " << _vec.size() << " elements with std::vector: " << timeV << " us";
+    std::cout << std::endl;
     clock_t startD = clock();
     mergeDec(_deq);
     clock_t endD = clock();
     double timeD = 1000.0 * (endD - startD) / CLOCKS_PER_SEC;
-    printDeque();
     std::cout << "Time to process a range of " << _deq.size() << " elements with std::deque : " << timeD << " us" << std::endl;
+}
+
+
+void PmergeMe::mergeVec(std::vector<int>& vec)
+{
+    if (vec.size() == 1)
+        return ;
+
+    int middle = vec.size() / 2;
+
+    std::vector<int> left = std::vector<int>(vec.begin(), vec.begin() + middle);
+    std::vector<int> right = std::vector<int>(vec.begin() + middle, vec.end());
+
+    mergeVec(left);
+    mergeVec(right);
+    sortMergeVec(left, right, vec);
+}
+
+void PmergeMe::sortMergeVec(std::vector<int>& left, std::vector<int>& right, std::vector<int>& vec)
+{
+    size_t l = 0, r = 0, i = 0;
+
+    while (l < left.size() && r < right.size())
+    {
+        if (left[l] < right[r])
+        {
+            vec[i] = left[l];
+            i++;
+            l++;
+        }
+        else
+        {
+            vec[i] = right[r];
+            i++;
+            r++;
+        }
+    }
+
+    while (l < left.size())
+    {
+        vec[i] = left[l];
+        i++;
+        l++;
+    }
+    while (r < right.size())
+    {
+        vec[i] = right[r];
+        i++;
+        r++;
+    }
 }
 
 void PmergeMe::mergeDec(std::deque<int> &vector) {
