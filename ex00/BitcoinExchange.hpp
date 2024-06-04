@@ -41,6 +41,15 @@ class BitcoinExchange {
         void parse_data();
         void calculate_value();
         void populatecsvlist();
+        int available_database();
+        int is_leap_year(int year);
+        bool check_digits(const std::string &reader);
+        bool check_pipes(const std::string &reader);
+        std::string ymd_valRet(const std::string &buffer, size_t pos, size_t npos);
+        int utils_convert(const std::string &reader, size_t pos, size_t npos);
+        int check_month(const std::string &reader);
+        int check_day(const std::string &reader, int month, int year);
+        int check_year(const std::string &reader);
         int check_value(const std::string &reader);
         void printVector(const std::vector<std::string> &vec);
         float value_convert(const std::string &reader, size_t pos, size_t npos);
