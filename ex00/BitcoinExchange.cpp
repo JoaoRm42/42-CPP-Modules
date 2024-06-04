@@ -210,8 +210,13 @@ void BitcoinExchange::parse_data() {
             std::string csv_ym = ymd_valRet(*it, 0, 7);
             int csv_d = utils_convert(*it, 8, 2);
             if (csv_ym == input_ym) {
-                if (csv_d == input_d)
-                    ;
+                if (csv_d == input_d) {
+                    float csv_val = value_convert(*it, 11, 10);
+                    float list_val = value_convert(*it2, 13, 4);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                }
                 else if (csv_d > input_d) {
                     --it;
                     float csv_val = value_convert(*it, 11, 10);
