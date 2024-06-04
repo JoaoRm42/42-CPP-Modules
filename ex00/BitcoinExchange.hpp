@@ -19,11 +19,13 @@
 #include <ctype.h>
 #include <string>
 #include <sstream>
-
+#include <limits>
+#include <vector>
 
 class BitcoinExchange {
     private:
         std::string _file;
+        std::vector<std::string> _list;
     public:
         BitcoinExchange();
         BitcoinExchange(const std::string &file);
@@ -32,6 +34,9 @@ class BitcoinExchange {
         ~BitcoinExchange();
         bool date_checker(char &str);
         void filereader();
+        int available_file();
+        void parse_data(const std::string &buffer);
+        void calculate_value();
 };
 
 #endif

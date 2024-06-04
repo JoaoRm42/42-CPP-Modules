@@ -12,11 +12,11 @@
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() : _file("Default") {
+BitcoinExchange::BitcoinExchange() : _file("Default"), _list() {
     filereader();
 }
 
-BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file) {
+BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _list() {
     filereader();
 }
 
@@ -150,34 +150,67 @@ int check_value(const std::string &reader) {
     return (value);
 }
 
-void parse_data(const std::string &reader, const std::string &buffer) {
-//    int data_value = utils_convert(buffer, 0, 10);
-//    int input_value = utils_convert(reader, 0, 8);
+void BitcoinExchange::parse_data(const std::string &buffer) {
+    std::vector<std::string>::const_iterator it = this->_list.begin();
+
+    while (it != this->_list.end()) {
+        std::string input_value = ymd_valRet(*it, 0, 10);
+        std::cout << "Input Value: " << input_value << std::endl;
+        break;
+    }
     std::string data_value = ymd_valRet(buffer, 0, 10);
-    std::string input_value = ymd_valRet(reader, 0, 10);
-    std::cout << "Data Value: " << data_value << " Input Value: " << input_value << std::endl;
 }
 
-void calculate_value(const std::string &reader) {
+void BitcoinExchange::calculate_value() {
     std::ifstream openfile("data.csv");
 
     size_t i = 0;
     std::string buffer;
     while(std::getline(openfile, buffer)) {
-//        std::cout << buffer << std::endl;
         if (i != 0) {
-            parse_data(reader, buffer);
+            parse_data(buffer);
             break;
         } else
             i++;
     }
     openfile.close();
-//    (void)reader;
+}
+
+int available_database() {
+    std::ifstream file("data.csv");
+    if (!file.is_open()) {
+        std::cerr << "Error: could not open file." << std::endl;
+        return (1002);
+    }
+    file.close();
+    return (0);
+}
+
+int BitcoinExchange::available_file() {
+    std::ifstream file(this->_file.c_str());
+    if (!file.is_open()) {
+        std::cerr << "Error: could not open file." << std::endl;
+        return (1002);
+    }
+    file.close();
+    return (0);
+}
+
+void printVector(const std::vector<std::string> &vec) {
+    std::vector<std::string>::const_iterator it = vec.begin();
+
+    while (it != vec.end()) {
+        std::cout << *it << std::endl;
+        ++it;
+    }
 }
 
 void BitcoinExchange::filereader() {
+    if (available_database() == 1002)
+        return;
+    else if (available_file() == 1002)
+        return ;
     std::ifstream openfile(this->_file.c_str());
-
     size_t i = 0;
     std::string reader;
     while(std::getline(openfile, reader)) {
@@ -188,7 +221,9 @@ void BitcoinExchange::filereader() {
                     if (check_month(reader) != 0) {
                         int month = check_month(reader);
                         if (check_day(reader, month, year)) {
-                            check_value(reader);
+                            if(check_value(reader) != 1001) {
+                                this->_list.push_back(reader);
+                            }
                         }
                     }
                 }
@@ -197,8 +232,8 @@ void BitcoinExchange::filereader() {
         }
         else
             i++;
-
     }
     openfile.close();
-    calculate_value(reader);
+    calculate_value();
+    printVector(this->_list);
 }
