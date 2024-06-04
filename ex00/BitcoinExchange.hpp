@@ -20,15 +20,15 @@
 #include <string>
 #include <sstream>
 #include <limits>
-#include <vector>
+#include <map>
 #include<unistd.h>
 #include <iterator>
 
 class BitcoinExchange {
     private:
         std::string _file;
-        std::vector<std::string> _list;
-        std::vector<std::string> _listcsv;
+        std::map<int, std::string> _map;
+        std::map<int, std::string> _mapcsv;
     public:
         BitcoinExchange();
         BitcoinExchange(const std::string &file);
@@ -40,7 +40,7 @@ class BitcoinExchange {
         int available_file();
         void parse_data();
         void calculate_value();
-        void populatecsvlist();
+        void populatecsvmap();
         int available_database();
         int is_leap_year(int year);
         bool check_digits(const std::string &reader);
@@ -51,7 +51,7 @@ class BitcoinExchange {
         int check_day(const std::string &reader, int month, int year);
         int check_year(const std::string &reader);
         int check_value(const std::string &reader);
-        void printVector(const std::vector<std::string> &vec);
+        void printMap(const std::map<int, std::string> &m);
         float value_convert(const std::string &reader, size_t pos, size_t npos);
         int month;
         int year;

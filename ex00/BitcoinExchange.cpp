@@ -12,11 +12,11 @@
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() : _file("Default"), _list(), _listcsv(), month(0), year(0) {
+BitcoinExchange::BitcoinExchange() : _file("Default"), _map(), _mapcsv(), month(0), year(0) {
     filereader();
 }
 
-BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _list(), _listcsv(), month(0), year(0) {
+BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _map(), _mapcsv(), month(0), year(0) {
     filereader();
 }
 
@@ -170,23 +170,24 @@ int BitcoinExchange::available_file() {
     return (0);
 }
 
-void BitcoinExchange::printVector(const std::vector<std::string> &vec) {
-    std::vector<std::string>::const_iterator it = vec.begin();
+void BitcoinExchange::printMap(const std::map<int, std::string> &m) {
+    std::map<int, std::string>::const_iterator it = m.begin();
 
-    while (it != vec.end()) {
-        std::cout << *it << std::endl;
+    while (it != m.end()) {
+        std::cout << "Iterator state: " << &it << ", Key: " << it->first << ", Value: " << it->second << std::endl;
         ++it;
     }
 }
 
-void BitcoinExchange::populatecsvlist() {
+void BitcoinExchange::populatecsvmap() {
     std::ifstream openfile("data.csv");
 
     std::string buffer;
     size_t i = 0;
     while(std::getline(openfile, buffer)) {
         if (i != 0) {
-            this->_listcsv.push_back(buffer);
+            this->_mapcsv[i] = buffer;
+            i++;
         } else
             i++;
     }
@@ -194,34 +195,38 @@ void BitcoinExchange::populatecsvlist() {
 }
 
 void BitcoinExchange::parse_data() {
-    std::vector<std::string>::const_iterator it = this->_listcsv.begin();
-    std::vector<std::string>::const_iterator it2 = this->_list.begin();
+    std::map<int, std::string>::const_iterator it = this->_mapcsv.begin();
+    std::map<int, std::string>::const_iterator it2 = this->_map.begin();
 
-    while (it2 != this->_list.end())
-        it2++;
-    it2--;
-    while (it2 != this->_list.end()) {
-        it = this->_listcsv.begin();
-        std::string input_value = ymd_valRet(*it2, 0, 10);
-        std::string input_ym = ymd_valRet(*it2, 0, 7);
-        int input_d = utils_convert(*it2, 8, 2);
-        while (it != this->_listcsv.end()) {
-            std::string csv_value = ymd_valRet(*it, 0, 10);
-            std::string csv_ym = ymd_valRet(*it, 0, 7);
-            int csv_d = utils_convert(*it, 8, 2);
+    while (it2 != this->_map.end())
+        ++it2;
+    --it2;
+    while (it2 != this->_map.end()) {
+        it = this->_mapcsv.begin();
+        std::string input_value = ymd_valRet(it2->second, 0, 10);
+        std::string input_ym = ymd_valRet(it2->second, 0, 7);
+        int input_d = utils_convert(it2->second, 8, 2);
+        while (it != this->_mapcsv.end()) {
+            std::string csv_value = ymd_valRet(it->second, 0, 10);
+            std::string csv_ym = ymd_valRet(it->second, 0, 7);
+            int csv_d = utils_convert(it->second, 8, 2);
             if (csv_ym == input_ym) {
-                if (csv_d == input_d)
-                    ;
-                else if (csv_d > input_d) {
+                if (csv_d == input_d) {
+                    float csv_val = value_convert(it->second, 11, 10);
+                    float list_val = value_convert(it2->second, 13, 4);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                } else if (csv_d > input_d) {
                     --it;
-                    float csv_val = value_convert(*it, 11, 10);
-                    float list_val = value_convert(*it2, 13, 4);
+                    float csv_val = value_convert(it->second, 11, 10);
+                    float list_val = value_convert(it2->second, 13, 4);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
                 }
             }
-            it++;
+            ++it;
         }
         break;
     }
@@ -232,7 +237,7 @@ void BitcoinExchange::filereader() {
         return;
     else if (available_file() == 1002)
         return ;
-    populatecsvlist();
+    populatecsvmap();
     std::ifstream openfile(this->_file.c_str());
     size_t i = 0;
     std::string reader;
@@ -244,7 +249,8 @@ void BitcoinExchange::filereader() {
                 if (month!= 0 && year!= 0) {
                     if (check_day(reader, month, year)!= 0) {
                         if (check_value(reader)!= 1001) {
-                            this->_list.push_back(reader);
+                            int nextKey = _map.size();
+                            this->_map.insert(std::make_pair(nextKey, reader));
                             parse_data();
                         }
                     }
