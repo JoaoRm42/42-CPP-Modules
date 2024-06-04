@@ -15,7 +15,9 @@
 int main(int argc, char **argv) {
     if (argc == 2)
         BitcoinExchange btc(argv[1]);
-    else
-        std::cout << "Not valid! Use ./btc [data file]" << std::endl;
+    else {
+        std::cout << "Error: could not open file." << std::endl;
+        std::cout << "Usage: ./btc [File]." << std::endl;
+    }
     return 0;
 }

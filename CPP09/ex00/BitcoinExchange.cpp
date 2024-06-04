@@ -35,6 +35,13 @@ std::string BitcoinExchange::getNameFile() {
     return (_fdOut);
 }
 
+/**
+ * Prints the Bitcoin exchange rate map.
+ * 
+ * This function iterates over the Bitcoin exchange rate map and prints each currency
+ * along with its corresponding exchange rate. The exchange rate is displayed with a
+ * precision of 7 decimal places.
+ */
 void BitcoinExchange::printBTCMap() {
     std::map<std::string, float>::iterator it;
     for (it = btc.begin(); it != btc.end(); ++it) {
@@ -42,6 +49,12 @@ void BitcoinExchange::printBTCMap() {
     }
 }
 
+/**
+ * Checks if all characters in a given string are digits.
+ *
+ * @param str The string to be checked.
+ * @return True if all characters are digits, false otherwise.
+ */
 bool BitcoinExchange::checkerDigits(const std::string& str)
 {
     for (size_t i = 0; i < str.length(); ++i)
@@ -50,6 +63,12 @@ bool BitcoinExchange::checkerDigits(const std::string& str)
     return (true);
 }
 
+/**
+ * Checks if a given year is a leap year.
+ *
+ * @param year The year to be checked.
+ * @return True if the year is a leap year, false otherwise.
+ */
 bool BitcoinExchange::checkerLeapYear(int year) {
     if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
         return (true);
@@ -147,12 +166,12 @@ bool BitcoinExchange::checkerDate(std::string &line) {
     std::getline(dateStream, day);
 
     if (year.length() != 4 || month.length() != 2 || day.length() != 2) {
-        std::cout << "Date Error, format not right!" << std::endl;
+        std::cout << "Error: bad input => " << date << std::endl;
         return (false);
     }
 
     if (checkerYear(year, date) == false || checkerMonth(month) == false || checkerDay(year, month, day) == false) {
-        std::cout << "Date Error, format not right!" << std::endl;
+        std::cout << "Error: bad input => " << date << std::endl;
         return (false);
     }
 

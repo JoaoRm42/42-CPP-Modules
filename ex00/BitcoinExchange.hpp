@@ -16,6 +16,10 @@
 #include <iostream>
 #include <cctype>
 #include <fstream>
+#include <ctype.h>
+#include <string>
+#include <sstream>
+
 
 class BitcoinExchange {
     private:
