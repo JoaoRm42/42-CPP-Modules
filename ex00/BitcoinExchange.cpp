@@ -12,11 +12,11 @@
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() : _file("Default"), _list() {
+BitcoinExchange::BitcoinExchange() : _file("Default"), _list(), _listcsv(), month(0), year(0) {
     filereader();
 }
 
-BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _list() {
+BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _list(), _listcsv(), month(0), year(0) {
     filereader();
 }
 
@@ -83,7 +83,7 @@ int utils_convert(const std::string &reader, size_t pos, size_t npos) {
     return (value);
 }
 
-float value_convert(const std::string &reader, size_t pos, size_t npos) {
+float BitcoinExchange::value_convert(const std::string &reader, size_t pos, size_t npos) {
     std::string year_str = reader.substr(pos, npos);
     float value;
     std::stringstream ss(year_str);
@@ -111,23 +111,23 @@ int check_month(const std::string &reader) {
     return (month);
 }
 
-bool check_day(const std::string &reader, int month, int year) {
+int check_day(const std::string &reader, int month, int year) {
     if (!isdigit(reader[8]) || reader[10] != ' ' || reader[11] != '|') {
         std::cout << "Error: bad input => " << reader << std::endl;
         return (0);
     }
     int day = utils_convert(reader, 8, 2);
     if (is_leap_year(year) == 1 && month == 2 && day <= 29) {
-        return true;
+        return 1;
     } else if (is_leap_year(year) == 0 && month == 2 && day <= 28) {
-        return true;
+        return 1;
     } else if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day <= 31) {
-        return true;
+        return 1;
     } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30) {
-        return true;
+        return 1;
     } else {
         std::cout << "Error: bad input => " << reader << std::endl;
-        return false;
+        return 0;
     }
 }
 
@@ -145,35 +145,44 @@ int check_year(const std::string &reader) {
     return (year);
 }
 
-int check_value(const std::string &reader) {
+int BitcoinExchange::check_value(const std::string &reader) {
     float value = value_convert(reader, 13, 1000);
     return (value);
 }
 
-void BitcoinExchange::parse_data(const std::string &buffer) {
-    std::vector<std::string>::const_iterator it = this->_list.begin();
+void BitcoinExchange::parse_data() {
+    std::vector<std::string>::const_iterator it = this->_listcsv.begin();
+    std::vector<std::string>::const_iterator it2 = this->_list.begin();
 
-    while (it != this->_list.end()) {
-        std::string input_value = ymd_valRet(*it, 0, 10);
-        std::cout << "Input Value: " << input_value << std::endl;
-        break;
+    // printVector(this->_list);
+    return;
+    while (it2 != this->_list.end()) {
+        it = this->_listcsv.begin();
+        std::string input_value = ymd_valRet(*it2, 0, 10);
+        std::string input_ym = ymd_valRet(*it2, 0, 7);
+        int input_d = utils_convert(*it2, 8, 2);
+        std::cout << "it2: " << *it2 << std::endl;
+        while (it != this->_listcsv.end()) {
+            std::string csv_value = ymd_valRet(*it, 0, 10);
+            std::string csv_ym = ymd_valRet(*it, 0, 7);
+            int csv_d = utils_convert(*it, 8, 2);
+            if (csv_ym == input_ym) {
+                if (csv_d == input_d)
+                    ;// std::cout << "Equal Day" << std::endl;
+                else if (csv_d > input_d) {
+                    std::vector<std::string>::const_iterator tempIt = it;
+                    --tempIt;
+                    float csv_val = value_convert(*tempIt, 11, 10);
+                    float list_val = value_convert(*it2, 13, 4);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                }
+            }
+            it++;
+        }
+        ++it2;
     }
-    std::string data_value = ymd_valRet(buffer, 0, 10);
-}
-
-void BitcoinExchange::calculate_value() {
-    std::ifstream openfile("data.csv");
-
-    size_t i = 0;
-    std::string buffer;
-    while(std::getline(openfile, buffer)) {
-        if (i != 0) {
-            parse_data(buffer);
-            break;
-        } else
-            i++;
-    }
-    openfile.close();
 }
 
 int available_database() {
@@ -196,7 +205,7 @@ int BitcoinExchange::available_file() {
     return (0);
 }
 
-void printVector(const std::vector<std::string> &vec) {
+void BitcoinExchange::printVector(const std::vector<std::string> &vec) {
     std::vector<std::string>::const_iterator it = vec.begin();
 
     while (it != vec.end()) {
@@ -205,35 +214,44 @@ void printVector(const std::vector<std::string> &vec) {
     }
 }
 
+void BitcoinExchange::populatecsvlist() {
+    std::ifstream openfile("data.csv");
+
+    std::string buffer;
+    size_t i = 0;
+    while(std::getline(openfile, buffer)) {
+        if (i != 0) {
+            this->_listcsv.push_back(buffer);
+        } else
+            i++;
+    }
+    openfile.close();
+}
+
 void BitcoinExchange::filereader() {
     if (available_database() == 1002)
         return;
     else if (available_file() == 1002)
         return ;
+    populatecsvlist();
     std::ifstream openfile(this->_file.c_str());
     size_t i = 0;
     std::string reader;
     while(std::getline(openfile, reader)) {
         if (i != 0) {
-            if (check_pipes(reader)) {
-                if (check_year(reader) != 0) {
-                    int year = check_year(reader);
-                    if (check_month(reader) != 0) {
-                        int month = check_month(reader);
-                        if (check_day(reader, month, year)) {
-                            if(check_value(reader) != 1001) {
-                                this->_list.push_back(reader);
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-        else
+            month = check_month(reader);
+            year = check_year(reader);
+            if (!check_pipes(reader))
+                if (!check_year(reader))
+                    if (check_day(reader, month, year) != 0)
+                        if (check_value(reader) != 1001)
+                            this->_list.push_back(reader);
+            // parse_data();
+        } else {
             i++;
+        }
     }
     openfile.close();
-    calculate_value();
-    printVector(this->_list);
+    // printVector(this->_listcsv);
+    // printVector(this->_list);
 }

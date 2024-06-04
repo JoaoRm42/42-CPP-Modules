@@ -21,11 +21,14 @@
 #include <sstream>
 #include <limits>
 #include <vector>
+#include<unistd.h>
+#include <iterator>
 
 class BitcoinExchange {
     private:
         std::string _file;
         std::vector<std::string> _list;
+        std::vector<std::string> _listcsv;
     public:
         BitcoinExchange();
         BitcoinExchange(const std::string &file);
@@ -35,8 +38,14 @@ class BitcoinExchange {
         bool date_checker(char &str);
         void filereader();
         int available_file();
-        void parse_data(const std::string &buffer);
+        void parse_data();
         void calculate_value();
+        void populatecsvlist();
+        int check_value(const std::string &reader);
+        void printVector(const std::vector<std::string> &vec);
+        float value_convert(const std::string &reader, size_t pos, size_t npos);
+        int month;
+        int year;
 };
 
 #endif
