@@ -43,14 +43,16 @@ void RPN::tokenizeAndPush(std::stack<std::string> &stack, const std::string &inp
     std::string token;
     size_t splitPosition = 1;
     while (iss >> token) {
-        if (token.length() != 1) {
-            std::string tmp = token.substr(0, splitPosition);
-            std::string tmp2 = token.substr(splitPosition);
-            copy.push(tmp);
-            copy.push(tmp2);
+        if (token != " ") {
+            if (token.length() != 1) {
+                std::string tmp = token.substr(0, splitPosition);
+                std::string tmp2 = token.substr(splitPosition);
+                copy.push(tmp);
+                copy.push(tmp2);
+            }
+            else
+                copy.push(token);
         }
-        else
-            copy.push(token);
     }
     while (!copy.empty()) {
         stack.push(copy.top());
@@ -66,12 +68,26 @@ void RPN::filler() {
     }
 }
 
-void RPN::fill_stack(const char **av) {
-    if (!av[1][0])
-    {
-        std::cout << "Error" << std::endl;
-        return ;
+int RPN::check_av(const char **av) {
+    int i = 0;
+    int flag = 0;
+
+    while (av[1][i]) {
+        char c = av[1][i];
+        if (c == '+' || c == '-' || c == '*' || c == '/' || (c >= '0' && c <= '9'))
+            flag++;
+        i++;
     }
+    if (flag < 3) {
+        std::cout << "Error" << std::endl;
+        return (1);
+    }
+    return (0);
+}
+
+void RPN::fill_stack(const char **av) {
+    if (check_av(av))
+        return ;
     tokenizeAndPush(this->_string, av[1]);
     filler();
     this->_validation.push("+");

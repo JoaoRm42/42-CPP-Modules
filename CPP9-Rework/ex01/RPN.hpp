@@ -42,6 +42,7 @@ class RPN {
         int check_stack_digit(std::stack<std::string> &tmp);
         int check_validation_calc(std::stack<std::string> &calc, std::stack<std::string> &tmp);
         int check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second);
+        int check_av(const char **av);
 };
 
 #endif
