@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:06 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/03 16:03:00 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:08:36 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,18 @@ float BitcoinExchange::value_convert(const std::string &reader, size_t pos, size
     return (value);
 }
 
+float BitcoinExchange::value_convert_csv(const std::string &reader, size_t pos, size_t npos) {
+    std::string year_str = reader.substr(pos, npos);
+    float value;
+    std::stringstream ss(year_str);
+    ss >> value;
+    if (value < 0) {
+        std::cout << "Error: not a positive number." << std::endl;
+        return (1001);
+    }
+    return (value);
+}
+
 int BitcoinExchange::check_month(const std::string &reader) {
     if (reader[7] != '-') {
         std::cout << "Error: bad input => " << reader << std::endl;
@@ -117,6 +129,10 @@ int BitcoinExchange::check_day(const std::string &reader, int month, int year) {
         return (0);
     }
     int day = utils_convert(reader, 8, 2);
+    if ((day == 1 && month == 1 && year == 2009) || (year == 2022 && month >= 04) || (year > 2022)) {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
     if (is_leap_year(year) == 1 && month == 2 && day <= 29) {
         return 1;
     } else if (is_leap_year(year) == 0 && month == 2 && day <= 28) {
@@ -212,14 +228,20 @@ void BitcoinExchange::parse_data() {
             int csv_d = utils_convert(it->second, 8, 2);
             if (csv_ym == input_ym) {
                 if (csv_d == input_d) {
-                    float csv_val = value_convert(it->second, 11, 10);
+                    float csv_val = value_convert_csv(it->second, 11, 10);
                     float list_val = value_convert(it2->second, 13, 4);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
                 } else if (csv_d > input_d) {
                     --it;
-                    float csv_val = value_convert(it->second, 11, 10);
+                    float csv_val = value_convert_csv(it->second, 11, 10);
+                    float list_val = value_convert(it2->second, 13, 4);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                } else if (csv_d < input_d && csv_ym == "2022-03" && input_ym == "2022-03" && csv_d == 29 && (input_d == 30 || input_d == 31)) {
+                    float csv_val = value_convert_csv(it->second, 11, 10);
                     float list_val = value_convert(it2->second, 13, 4);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
@@ -261,4 +283,5 @@ void BitcoinExchange::filereader() {
         }
     }
     openfile.close();
+    // printMap(_mapcsv);
 }

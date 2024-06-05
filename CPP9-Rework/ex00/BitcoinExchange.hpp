@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:10 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/03 16:03:04 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/05 10:54:12 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ class BitcoinExchange {
         int check_value(const std::string &reader);
         void printMap(const std::map<int, std::string> &m);
         float value_convert(const std::string &reader, size_t pos, size_t npos);
+        float value_convert_csv(const std::string &reader, size_t pos, size_t npos);
         int month;
         int year;
 };
