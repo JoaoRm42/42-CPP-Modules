@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:39 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 17:23:46 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:05:37 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,26 @@ std::string RPN::intToString(int number) {
     return oss.str();
 }
 
+int RPN::check_validation_calc(std::stack<std::string> &calc, std::stack<std::string> &tmp) {
+    std::stack<std::string> tmp2 = tmp;
+    std::stack<std::string> calc_tmp = calc;
+    calc_tmp.push(tmp2.top());
+    if (isdigit(stringToInt(calc_tmp.top())) == 1)
+        return (0);
+    tmp2.pop();
+    calc_tmp.push(tmp2.top());
+    if (isdigit(stringToInt(calc_tmp.top())) == 1)
+        return (0);
+    return(1);
+}
+
+int RPN::check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second) {
+    if (tmp.empty() && isdigit(stringToInt(first)) && isdigit(stringToInt(second)) && !isdigit(stringToInt(calc.top())))
+        return 1;
+    else
+        return 0;
+}
+
 int RPN::execute_calculus() {
     std::stack<std::string> calc;
     std::stack<std::string> tmp = this->_string;
@@ -147,25 +167,53 @@ int RPN::execute_calculus() {
     std::string second;
     std::string total;
     int math_t;
+    if (check_validation_calc(calc, tmp) == 0) {
+        std::cout << "Error" << std::endl;
+        return(0);
+    }
     while (!tmp.empty()) {
         calc.push(tmp.top());
         if (calc.top() == "+") {
             tmp.pop();
+            if (calc.size() >= 2 && tmp.empty()) {
+                if (check_final(calc, tmp, first, second)) {
+                    std::cout << "Error" << std::endl;
+                    return(0);
+                }
+            }
             clean_stack(calc, first, second);
             math_t = stringToInt(first) + stringToInt(second);
             calc.push(intToString(math_t));
         } else if (calc.top() == "/") {
             tmp.pop();
+            if (calc.size() >= 2 && tmp.empty()) {
+                if (check_final(calc, tmp, first, second)) {
+                    std::cout << "Error" << std::endl;
+                    return(0);
+                }
+            }
             clean_stack(calc, first, second);
             math_t = stringToInt(first) / stringToInt(second);
             calc.push(intToString(math_t));
         } else if (calc.top() == "*") {
             tmp.pop();
+            if (calc.size() >= 2 && tmp.empty()) {
+                if (check_final(calc, tmp, first, second)) {
+                    std::cout << "Error" << std::endl;
+                    return(0);
+                }
+            }
             clean_stack(calc, first, second);
             math_t = stringToInt(first) * stringToInt(second);
             calc.push(intToString(math_t));
         } else if (calc.top() == "-") {
             tmp.pop();
+            if (calc.size() >= 2 && tmp.empty()) {
+                if (check_final(calc, tmp, first, second)) {
+                    std::cout << "Error" << std::endl;
+                    return(0);
+                }
+            }
             clean_stack(calc, first, second);
             math_t = stringToInt(first) - stringToInt(second);
             calc.push(intToString(math_t));

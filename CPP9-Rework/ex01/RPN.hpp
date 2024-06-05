@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:41 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 17:23:41 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:01:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ class RPN {
         std::string intToString(int number);
         int stringToInt(const std::string& str);
         int check_stack_digit(std::stack<std::string> &tmp);
+        int check_validation_calc(std::stack<std::string> &calc, std::stack<std::string> &tmp);
+        int check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second);
 };
 
 #endif
