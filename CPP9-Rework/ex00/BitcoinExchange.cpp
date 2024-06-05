@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:06 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 11:08:36 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/05 11:16:17 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,21 +228,21 @@ void BitcoinExchange::parse_data() {
             int csv_d = utils_convert(it->second, 8, 2);
             if (csv_ym == input_ym) {
                 if (csv_d == input_d) {
-                    float csv_val = value_convert_csv(it->second, 11, 10);
-                    float list_val = value_convert(it2->second, 13, 4);
+                    float csv_val = value_convert_csv(it->second, 11, 100);
+                    float list_val = value_convert(it2->second, 13, 100);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
                 } else if (csv_d > input_d) {
                     --it;
-                    float csv_val = value_convert_csv(it->second, 11, 10);
-                    float list_val = value_convert(it2->second, 13, 4);
+                    float csv_val = value_convert_csv(it->second, 11, 100);
+                    float list_val = value_convert(it2->second, 13, 100);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
                 } else if (csv_d < input_d && csv_ym == "2022-03" && input_ym == "2022-03" && csv_d == 29 && (input_d == 30 || input_d == 31)) {
-                    float csv_val = value_convert_csv(it->second, 11, 10);
-                    float list_val = value_convert(it2->second, 13, 4);
+                    float csv_val = value_convert_csv(it->second, 11, 100);
+                    float list_val = value_convert(it2->second, 13, 100);
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
