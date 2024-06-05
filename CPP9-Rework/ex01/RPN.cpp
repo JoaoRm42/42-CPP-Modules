@@ -67,6 +67,11 @@ void RPN::filler() {
 }
 
 void RPN::fill_stack(const char **av) {
+    if (!av[1][0])
+    {
+        std::cout << "Error" << std::endl;
+        return ;
+    }
     tokenizeAndPush(this->_string, av[1]);
     filler();
     this->_validation.push("+");
@@ -118,13 +123,22 @@ int RPN::check_stack_digit(std::stack<std::string> &tmp) {
     return 1;
 }
 
-void RPN::clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second) {
+int RPN::clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second) {
+    std::string tmp = stack.top();
     stack.pop();
     second = stack.top();
+    if (second == "0" && tmp == "/") {
+        std::cout << "Error" << std::endl;
+        return (0);
+    }
     stack.pop();
     first = stack.top();
+    if (first == "0" && tmp == "/") {
+        std::cout << "Error" << std::endl;
+        return (0);
+    }
     stack.pop();
-    return ;
+    return (1);
 }
 
 int RPN::stringToInt(const std::string& str) {
@@ -144,20 +158,22 @@ int RPN::check_validation_calc(std::stack<std::string> &calc, std::stack<std::st
     std::stack<std::string> tmp2 = tmp;
     std::stack<std::string> calc_tmp = calc;
     calc_tmp.push(tmp2.top());
-    if (isdigit(stringToInt(calc_tmp.top())) == 1)
-        return (0);
+    if (calc_tmp.top() == "*" || calc_tmp.top() == "/" || calc_tmp.top() == "+" || calc_tmp.top() == "-")
+        return (1);
     tmp2.pop();
     calc_tmp.push(tmp2.top());
-    if (isdigit(stringToInt(calc_tmp.top())) == 1)
-        return (0);
-    return(1);
+     if (calc_tmp.top() == "*" || calc_tmp.top() == "/" || calc_tmp.top() == "+" || calc_tmp.top() == "-")
+        return (1);
+    return(0);
 }
 
 int RPN::check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second) {
     if (tmp.empty() && isdigit(stringToInt(first)) && isdigit(stringToInt(second)) && !isdigit(stringToInt(calc.top())))
-        return 1;
+        return (1);
+    else if (tmp.empty() && calc.size() == 2 && !isdigit(stringToInt(calc.top())))
+        return (1);
     else
-        return 0;
+        return (0);
 }
 
 int RPN::execute_calculus() {
@@ -167,9 +183,9 @@ int RPN::execute_calculus() {
     std::string second;
     std::string total;
     int math_t;
-    if (check_validation_calc(calc, tmp) == 0) {
+    if (check_validation_calc(calc, tmp) != 0) {
         std::cout << "Error" << std::endl;
-        return(0);
+        return(1);
     }
     while (!tmp.empty()) {
         calc.push(tmp.top());
@@ -192,7 +208,8 @@ int RPN::execute_calculus() {
                     return(0);
                 }
             }
-            clean_stack(calc, first, second);
+            if (!clean_stack(calc, first, second))
+                return (0);
             math_t = stringToInt(first) / stringToInt(second);
             calc.push(intToString(math_t));
         } else if (calc.top() == "*") {
@@ -221,6 +238,11 @@ int RPN::execute_calculus() {
             tmp.pop();
         }
     }
+    if (calc.size() != 1) {
+        std::cout << "Error" << std::endl;
+        return(0);
+    }
+
     std::cout << calc.top() << std::endl;
     return (1);
 }

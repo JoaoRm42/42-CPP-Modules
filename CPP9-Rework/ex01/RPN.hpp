@@ -33,7 +33,7 @@ class RPN {
         void fill_stack(const char **av);
         void tokenizeAndPush(std::stack<std::string>& stack, const std::string &input);
         void printStack(const std::stack<std::string> &stack, const char *name);
-        void clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second);
+        int clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second);
         int check_stack_valid();
         int execute_calculus();
         void filler();
