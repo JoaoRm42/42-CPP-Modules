@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 10:14:04 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/06 10:52:57 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:17:40 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <vector>
 #include <deque>
 #include <sstream>
+#include <algorithm>
+#include <ctime>
 
 class PmergeMe {
     private:
@@ -31,7 +33,17 @@ class PmergeMe {
         void fill_containers(char **av);
         void interface(char **av);
         int check_valid_containers();
-        int stringToInt(const std::string& str);
+        void print_vector(const std::vector<int> &vector);
+        void print_deque(const std::deque<int> &deque);
+        bool isInteger(const std::string& str);
+        void insertSortedVector(std::vector<int>& vec, int num);
+        void insertSortedDeque(std::deque<int>& vec, int num);
+        void fordJohnsonSortVector(std::vector<int>& arr);
+        void fordJohnsonSortDeque(std::deque<int>& arr);
+        std::vector<int> convertToIntVector(const std::vector<std::string>& stringVector);
+        std::deque<int> convertToIntDeque(const std::deque<std::string>& stringDeque);
+        void send_vector();
+        void send_deque();
 };
 
 #endif
