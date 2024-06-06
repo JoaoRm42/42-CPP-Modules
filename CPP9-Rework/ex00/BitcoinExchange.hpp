@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:10 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 10:54:12 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:04:38 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,15 @@ class BitcoinExchange {
         std::string _file;
         std::map<int, std::string> _map;
         std::map<int, std::string> _mapcsv;
-    public:
         BitcoinExchange();
-        BitcoinExchange(const std::string &file);
         BitcoinExchange(const BitcoinExchange &cpy);
         BitcoinExchange &operator = (const BitcoinExchange &cpy);
+    public:
+        BitcoinExchange(const std::string &file);
         ~BitcoinExchange();
-        bool date_checker(char &str);
         void filereader();
         int available_file();
         void parse_data();
-        void calculate_value();
         void populatecsvmap();
         int available_database();
         int is_leap_year(int year);

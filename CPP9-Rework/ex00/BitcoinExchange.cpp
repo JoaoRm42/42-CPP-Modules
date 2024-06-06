@@ -6,15 +6,13 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:06 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 11:16:17 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:04:59 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() : _file("Default"), _map(), _mapcsv(), month(0), year(0) {
-    filereader();
-}
+BitcoinExchange::BitcoinExchange() : _file("Default"), _map(), _mapcsv(), month(0), year(0) {}
 
 BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _map(), _mapcsv(), month(0), year(0) {
     filereader();
