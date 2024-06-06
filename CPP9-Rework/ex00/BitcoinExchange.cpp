@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 14:27:06 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/06 10:04:59 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 12:10:14 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int BitcoinExchange::check_day(const std::string &reader, int month, int year) {
         return (0);
     }
     int day = utils_convert(reader, 8, 2);
-    if ((day == 1 && month == 1 && year == 2009) || (year == 2022 && month >= 04) || (year > 2022)) {
+    if ((day == 1 && month == 1 && year == 2009)) {
         std::cout << "Error: bad input => " << reader << std::endl;
         return (0);
     }
@@ -238,15 +238,17 @@ void BitcoinExchange::parse_data() {
                     float final_value = csv_val * list_val;
                     std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
                     break;
-                } else if (csv_d < input_d && csv_ym == "2022-03" && input_ym == "2022-03" && csv_d == 29 && (input_d == 30 || input_d == 31)) {
-                    float csv_val = value_convert_csv(it->second, 11, 100);
-                    float list_val = value_convert(it2->second, 13, 100);
-                    float final_value = csv_val * list_val;
-                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
-                    break;
                 }
             }
             ++it;
+            if (it == this->_mapcsv.end()) {
+                --it;
+                float csv_val = value_convert_csv(it->second, 11, 100);
+                float list_val = value_convert(it2->second, 13, 100);
+                float final_value = csv_val * list_val;
+                std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                break;
+            }
         }
         break;
     }
