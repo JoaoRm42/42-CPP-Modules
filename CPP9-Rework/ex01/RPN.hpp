@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:41 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 18:01:54 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 10:01:28 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ class RPN {
     private:
         std::stack<std::string> _string;
         std::stack<std::string> _validation;
-    public:
         RPN();
-        RPN(const char **av);
         RPN(const RPN &obj);
         RPN& operator=(const RPN &obj);
+    public:
+        RPN(const char **av);
         ~RPN();
         void fill_stack(const char **av);
         void tokenizeAndPush(std::stack<std::string>& stack, const std::string &input);
