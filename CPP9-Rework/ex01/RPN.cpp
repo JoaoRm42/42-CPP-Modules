@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:39 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/05 18:05:37 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 09:59:42 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void RPN::filler() {
         ss << i;
         this->_validation.push(ss.str());
     }
+    this->_validation.push("+");
+    this->_validation.push("-");
+    this->_validation.push("*");
+    this->_validation.push("/");
 }
 
 int RPN::check_av(const char **av) {
@@ -90,10 +94,6 @@ void RPN::fill_stack(const char **av) {
         return ;
     tokenizeAndPush(this->_string, av[1]);
     filler();
-    this->_validation.push("+");
-    this->_validation.push("-");
-    this->_validation.push("*");
-    this->_validation.push("/");
     if (!check_stack_valid())
         return ;
     if (!execute_calculus())
