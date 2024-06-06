@@ -6,7 +6,7 @@
 /*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 11:21:39 by joaoped2          #+#    #+#             */
-/*   Updated: 2024/06/06 09:59:42 by joaoped2         ###   ########.fr       */
+/*   Updated: 2024/06/06 11:50:54 by joaoped2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,18 @@ void RPN::filler() {
 
 int RPN::check_av(const char **av) {
     int i = 0;
-    int flag = 0;
-
+    int num = 0;
+    int operators = 0;
+    
     while (av[1][i]) {
         char c = av[1][i];
-        if (c == '+' || c == '-' || c == '*' || c == '/' || (c >= '0' && c <= '9'))
-            flag++;
+        if (c == '+' || c == '-' || c == '*' || c == '/')
+            operators++;
+        else if(c >= '0' && c <= '9')
+            num++;
         i++;
     }
-    if (flag < 3) {
+    if (num - operators != 1)  {
         std::cout << "Error" << std::endl;
         return (1);
     }
@@ -149,10 +152,6 @@ int RPN::clean_stack(std::stack<std::string> &stack, std::string &first, std::st
     }
     stack.pop();
     first = stack.top();
-    if (first == "0" && tmp == "/") {
-        std::cout << "Error" << std::endl;
-        return (0);
-    }
     stack.pop();
     return (1);
 }
@@ -176,9 +175,14 @@ int RPN::check_validation_calc(std::stack<std::string> &calc, std::stack<std::st
     calc_tmp.push(tmp2.top());
     if (calc_tmp.top() == "*" || calc_tmp.top() == "/" || calc_tmp.top() == "+" || calc_tmp.top() == "-")
         return (1);
+    if (tmp.size() == 1) {
+        calc.push(tmp.top());
+        tmp.pop();
+        return (0);
+    }
     tmp2.pop();
     calc_tmp.push(tmp2.top());
-     if (calc_tmp.top() == "*" || calc_tmp.top() == "/" || calc_tmp.top() == "+" || calc_tmp.top() == "-")
+    if (calc_tmp.top() == "*" || calc_tmp.top() == "/" || calc_tmp.top() == "+" || calc_tmp.top() == "-")
         return (1);
     return(0);
 }
@@ -250,7 +254,9 @@ int RPN::execute_calculus() {
             clean_stack(calc, first, second);
             math_t = stringToInt(first) - stringToInt(second);
             calc.push(intToString(math_t));
-        } else {
+        } else if (tmp.size() == 1)
+            break; 
+        else {
             tmp.pop();
         }
     }
