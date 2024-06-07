@@ -1,43 +1,48 @@
-//
-// Created by Neddy on 20/03/2024.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   RPN.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/05 11:21:41 by joaoped2          #+#    #+#             */
+/*   Updated: 2024/06/06 10:01:28 by joaoped2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef CPP_MODULES_42_RPN_HPP
-#define CPP_MODULES_42_RPN_HPP
+#ifndef RPN_HPP
+# define RPN_HPP
 
 #include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
 #include <stack>
+#include <iterator>
+#include <string>
+#include <sstream>
+#include <cctype>
 
 class RPN {
     private:
-            std::string _expression;
-            std::stack<double> _stack;
-            RPN(const RPN& cpy);
-            RPN& operator=(const RPN& cpy);
-
-    public:
+        std::stack<std::string> _string;
+        std::stack<std::string> _validation;
         RPN();
-        RPN(std::string input);
+        RPN(const RPN &obj);
+        RPN& operator=(const RPN &obj);
+    public:
+        RPN(const char **av);
         ~RPN();
-
-        void expressionSetter(std::string exp);
-        std::string expressionGetter();
-        bool expressionChecker();
-        void execRPN();
-
-        class WrongExpressionException : public std::exception
-        {
-            public:
-                virtual const char *what() const throw() {
-                    return ("Exception: Incorrect expression!");
-                }
-        };
-
+        void fill_stack(const char **av);
+        void tokenizeAndPush(std::stack<std::string>& stack, const std::string &input);
+        void printStack(const std::stack<std::string> &stack, const char *name);
+        int clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second);
+        int check_stack_valid();
+        int execute_calculus();
+        void filler();
+        std::string intToString(int number);
+        int stringToInt(const std::string& str);
+        int check_stack_digit(std::stack<std::string> &tmp);
+        int check_validation_calc(std::stack<std::string> &calc, std::stack<std::string> &tmp);
+        int check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second);
+        int check_av(const char **av);
 };
 
-
-#endif //CPP_MODULES_42_RPN_HPP
+#endif

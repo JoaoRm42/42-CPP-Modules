@@ -1,62 +1,59 @@
-//
-// Created by Neddy on 20/02/2024.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 14:27:10 by joaoped2          #+#    #+#             */
+/*   Updated: 2024/06/06 10:04:38 by joaoped2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef CPP_MODULES_42_BITCOINEXCHANGE_HPP
-#define CPP_MODULES_42_BITCOINEXCHANGE_HPP
+#ifndef BITCOINEXCHANGE_HPP
+# define BITCOINEXCHANGE_HPP
 
 #include <iostream>
-#include <algorithm>
-#include <iomanip>
+#include <cctype>
 #include <fstream>
+#include <ctype.h>
+#include <string>
 #include <sstream>
+#include <limits>
 #include <map>
+#include<unistd.h>
+#include <iterator>
 
 class BitcoinExchange {
     private:
-        std::map<std::string, float> btc;
-        std::string _fdOut;
-        BitcoinExchange(const BitcoinExchange &cpy);
-        BitcoinExchange& operator=(const BitcoinExchange &cpy);
-
-    public:
+        std::string _file;
+        std::map<int, std::string> _map;
+        std::map<int, std::string> _mapcsv;
         BitcoinExchange();
-        BitcoinExchange(std::string fdOut);
+        BitcoinExchange(const BitcoinExchange &cpy);
+        BitcoinExchange &operator = (const BitcoinExchange &cpy);
+    public:
+        BitcoinExchange(const std::string &file);
         ~BitcoinExchange();
-
-        void setNameFile(std::string name);
-        std::string getNameFile();
-
-        void printBTCMap();
-
-//        bool checkerDigits(const std::string& string);
-        bool checkerDigits(const std::string& str);
-        bool checkerLeapYear(int year);
-        void checkerInput();
-        void checkerLine(std::string &line);
-        bool checkerPipes(std::string &line);
-        bool checkerDate(std::string &line);
-        bool checkerYear(std::string &year, std::string &date);
-        bool checkerMonth(std::string &month);
-        bool checkerDay(std::string &year, std::string &month, std::string &day);
-        bool checkerValue(std::string &line, std::string &date);
-
-        void csvReader();
-        void BTCValueConverter(std::string& date, std::string& value);
-
-        class CantOpenFileException : public std::exception {
-            public:
-                virtual const char *what() const throw() {
-                    return ("Exception: Can't open file!");
-                }
-        };
-        class FormatException : public std::exception {
-            public:
-                virtual const char *what() const throw() {
-                    return ("Exception: Incorrect format at the beginning of the file!");
-                }
-        };
+        void filereader();
+        int available_file();
+        void parse_data();
+        void populatecsvmap();
+        int available_database();
+        int is_leap_year(int year);
+        bool check_digits(const std::string &reader);
+        bool check_pipes(const std::string &reader);
+        std::string ymd_valRet(const std::string &buffer, size_t pos, size_t npos);
+        int utils_convert(const std::string &reader, size_t pos, size_t npos);
+        int check_month(const std::string &reader);
+        int check_day(const std::string &reader, int month, int year);
+        int check_year(const std::string &reader);
+        int check_value(const std::string &reader);
+        void printMap(const std::map<int, std::string> &m);
+        float value_convert(const std::string &reader, size_t pos, size_t npos);
+        float value_convert_csv(const std::string &reader, size_t pos, size_t npos);
+        int month;
+        int year;
 };
 
-
-#endif //CPP_MODULES_42_BITCOINEXCHANGE_HPP
+#endif
