@@ -1,17 +1,21 @@
-//
-// Created by Neddy on 20/02/2024.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   BitcoinExchange.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/03 14:27:06 by joaoped2          #+#    #+#             */
+/*   Updated: 2024/06/06 12:10:14 by joaoped2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "BitcoinExchange.hpp"
 
-BitcoinExchange::BitcoinExchange() : _fdOut("Default") {
-    csvReader();
-    checkerInput();
-}
+BitcoinExchange::BitcoinExchange() : _file("Default"), _map(), _mapcsv(), month(0), year(0) {}
 
-BitcoinExchange::BitcoinExchange(std::string fdOut) : _fdOut(fdOut) {
-    csvReader();
-    checkerInput();
+BitcoinExchange::BitcoinExchange(const std::string &file) : _file(file), _map(), _mapcsv(), month(0), year(0) {
+    filereader();
 }
 
 BitcoinExchange::BitcoinExchange(const BitcoinExchange &cpy) {
@@ -24,336 +28,260 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &cpy) {
 }
 
 BitcoinExchange::~BitcoinExchange() {
-
 }
 
-void BitcoinExchange::setNameFile(std::string name) {
-    _fdOut = name;
+int BitcoinExchange::is_leap_year(int year) {
+    if (year % 4 != 0) {
+        return (0);
+    }
+    else if (year % 100 == 0 && year % 400 != 0) {
+        return (0);
+    }
+    else
+        return (1);
 }
 
-std::string BitcoinExchange::getNameFile() {
-    return (_fdOut);
-}
-
-/**
- * Prints the Bitcoin exchange rate map.
- * 
- * This function iterates over the Bitcoin exchange rate map and prints each currency
- * along with its corresponding exchange rate. The exchange rate is displayed with a
- * precision of 7 decimal places.
- */
-void BitcoinExchange::printBTCMap() {
-    std::map<std::string, float>::iterator it;
-    for (it = btc.begin(); it != btc.end(); ++it) {
-        std::cout << it->first << "," << std::setprecision(7) << it->second << std::endl;
-    }
-}
-
-/**
- * Checks if all characters in a given string are digits.
- *
- * @param str The string to be checked.
- * @return True if all characters are digits, false otherwise.
- */
-bool BitcoinExchange::checkerDigits(const std::string& str)
-{
-    for (size_t i = 0; i < str.length(); ++i)
-        if (!isdigit(str[i]))
-            return (false);
-    return (true);
-}
-
-/**
- * Checks if a given year is a leap year.
- *
- * @param year The year to be checked.
- * @return True if the year is a leap year, false otherwise.
- */
-bool BitcoinExchange::checkerLeapYear(int year) {
-    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
-        return (true);
-    }
-    return (false);
-}
-
-void BitcoinExchange::csvReader() {
-    std::ifstream openfile("data.csv");
-    if (!openfile.is_open()) {
-        throw CantOpenFileException();
-    }
-
-    std::string reader;
-    std::getline(openfile, reader);
-    while (std::getline(openfile, reader)) {
-        std::istringstream isString(reader);
-
-        std::string date;
-        float btc_value;
-        std::getline(isString, date, ',');
-        isString >> btc_value;
-        btc[date] = btc_value;
-    }
-
-    openfile.close();
-}
-
-void BitcoinExchange::checkerInput() {
-    std::ifstream openfile(this->_fdOut.c_str());
-    if (!openfile.is_open()) {
-        throw CantOpenFileException();
-    }
-
-    std::string reader;
-    if (!std::getline(openfile, reader)) {
-        return ;
-    }
-    if (reader != "date | value") {
-        throw FormatException();
-    }
-    while (std::getline(openfile, reader)) {
-        checkerLine(reader);
-    }
-}
-
-void BitcoinExchange::checkerLine(std::string &line) {
-    if (!checkerDate(line)) {
-        return ;
-    }
-    if (checkerPipes(line) == false) {
-        return ;
-    }
-}
-
-bool BitcoinExchange::checkerPipes(std::string &line) {
-    int countpipes = 0;
-
-    for (size_t i = 0; i < line.length(); i++) {
-        if (line[i] == '|') {
-            countpipes++;
-        }
-    }
-    if (countpipes != 1) {
-        std::cout << "Pipes Error" << std::endl;
-        return (false);
-    }
-    return (true);
-}
-
-bool BitcoinExchange::checkerDate(std::string &line) {
-    size_t position = line.find('|');
-
-    std::string date = line.substr(0, position);
-
-    date.erase(std::remove_if(date.begin(), date.end(), ::isspace), date.end());
-
-    int mincount = 0;
-    for (size_t i = 0; i < date.length(); i++) {
-        if (line[i] == '-') {
-            mincount++;
-        }
-    }
-
-    if (mincount != 2) {
-        std::cout << "Minus Error" << std::endl;
-        return (false);
-    }
-
-    std::istringstream dateStream(date);
-    std::string year, month, day;
-
-    std::getline(dateStream, year, '-');
-    std::getline(dateStream, month, '-');
-    std::getline(dateStream, day);
-
-    if (year.length() != 4 || month.length() != 2 || day.length() != 2) {
-        std::cout << "Error: bad input => " << date << std::endl;
-        return (false);
-    }
-
-    if (checkerYear(year, date) == false || checkerMonth(month) == false || checkerDay(year, month, day) == false) {
-        std::cout << "Error: bad input => " << date << std::endl;
-        return (false);
-    }
-
-    if (checkerValue(line, date) == false) {
-        return (false);
-    }
-
-    return (true);
-}
-
-bool BitcoinExchange::checkerYear(std::string &year, std::string &date) {
-    if (checkerDigits(year) == false) {
-        return (false);
-    }
-
-    if (atoi(year.c_str()) < 2009 || date == "2009-01-01") {
-        return (false);
-    }
-
-    return (true);
-}
-
-bool BitcoinExchange::checkerMonth(std::string &month) {
-    if (checkerDigits(month) == false) {
-        return (false);
-    }
-
-    if (atoi(month.c_str()) < 1 || atoi(month.c_str()) > 12) {
-        return (false);
-    }
-
-    return (true);
-}
-
-bool BitcoinExchange::checkerDay(std::string &year, std::string &month, std::string &day) {
-    if (checkerDigits(day) == false) {
-        return (false);
-    }
-
-    if (month == "02") {
-        if (checkerLeapYear(atoi(year.c_str())) == true) {
-            if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 29) {
-                return (false);
-            }
-        } else {
-            if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 28) {
-                return (false);
-            }
-        }
-    } else if (month == "04" || month == "06" || month == "09" || month == "11") {
-        if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 30) {
-            return (false);
-        }
-    } else {
-        if (atoi(day.c_str()) < 1 || atoi(day.c_str()) > 31) {
-            return (false);
-        }
-    }
-
-    return (true);
-}
-
-//bool BitcoinExchange::checkerValue(std::string &line, std::string &date) {
-//    size_t position = line.find('|');
-//
-//    std::string value = line.substr(position + 1);
-//
-//    value.erase(std::remove_if(value.begin(), value.end(), ::isspace), value.end());
-//
-//    if (value.length() <= 0) {
-//        std::cout << "Error: No correct Value" << std::endl;
-//        return (false);
-//    }
-//
-//    float numValue = atof(value.c_str());
-//
-//    if (numValue < 0.0) {
-//        std::cout << "Error: number is not positive!" << std::endl;
-//        return (false);
-//    }
-//
-//    if (numValue > 1000.0) {
-//        std::cout << "Error: Number is too big" << std::endl;
-//        return (false);
-//    }
-//
-//    int countdots = 0;
-//
-//    for (size_t i = 0; i < value.length(); i++) {
-//        if (!checkerDigits(value[i]) && value[i] != '.') {
-//            std::cout << "Error!" << line << std::endl;
-//            return (false);
-//        }
-//
-//        if (value[i] == '.')
-//            countdots++;
-//    }
-//
-//    if (countdots > 1 || !checkerDigits(value[0])) {
-//        std::cout << "Error!" << line << std::endl;
-//        return (false);
-//    }
-//
-//    size_t dotsPosition = value.find('.');
-//    if (dotsPosition != std::string::npos && !checkerDigits(value[dotsPosition + 1])) {
-//        std::cout << "Error!" << line <<std::endl;
-//        return (false);
-//    }
-//
-//    BTCValueConverter(date, value);
-//    return (true);
-//}
-
-bool	BitcoinExchange::checkerValue(std::string& line, std::string& date)
-{
-    size_t pos = line.find('|');
-
-    std::string value = line.substr(pos + 1);
-    // Remove all whitespaces
-    value.erase(std::remove_if(value.begin(), value.end(), ::isspace), value.end());
-
-    if(value.length() <= 0)
-    {
-        std::cout << "Error(5): bad input => " << line << std::endl;
-        return false;
-    }
-    float numValue = atof(value.c_str());
-    if (numValue < 0.0)
-    {
-        std::cout << "Error: not a positive number." << std::endl;
-        return false;
-    }
-    if (numValue > 1000.0)
-    {
-        std::cout << "Error: too large a number." << std::endl;
-        return false;
-    }
-    int dotCount = 0;
-    for (size_t i = 0; i < value.length(); i++)
-    {
-        if (!isdigit(value[i]) && value[i] != '.')
-        {
-            std::cout << "Error(6): bad input => " << line << std::endl;
+bool BitcoinExchange::check_digits(const std::string &reader) {
+    for (size_t i = 0; reader[i]; ++i) {
+        if (!isdigit(reader[i])) {
+            std::cout << "Error: bad input => " << reader << std::endl;
             return false;
         }
-        if(value[i] == '.')
-            dotCount++;
     }
-    if (dotCount > 1 || !isdigit(value[0]))
-    {
-        std::cout << "Error(7): bad input => " << line << std::endl;
-        return false;
-    }
-    size_t dotPos = value.find('.');
-    if(dotPos != std::string::npos && !isdigit(value[dotPos + 1]))
-    {
-        std::cout << "Error(8): bad input => " << line << std::endl;
-        return false;
-    }
-
-    BTCValueConverter(date, value);
     return true;
 }
 
-void BitcoinExchange::BTCValueConverter(std::string& date, std::string& value) {
-    float valueCalc;
-
-    std::map<std::string, float>::iterator  it;
-
-    for (it = btc.begin(); it != btc.end(); ++it) {
-        if (date < it->first) {
-            --it;
-            valueCalc = it->second;
-            break ;
+bool BitcoinExchange::check_pipes(const std::string &reader) {
+    size_t number_pipes = 0;
+    for (size_t i = 0; reader[i]; i++) {
+        if (reader[i] == '|') {
+            number_pipes += 1;
         }
     }
-
-    if (it == btc.end()) {
-        --it;
-        valueCalc = it->second;
+    if (number_pipes == 1)
+        return true;
+    else {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return false;
     }
+}
 
-    float result = atof(value.c_str()) * valueCalc;
-    std::cout << date << " => " << value << " = " << std::setprecision(7) << result << std::endl;
+std::string BitcoinExchange::ymd_valRet(const std::string &buffer, size_t pos, size_t npos) {
+    std::string year_str = buffer.substr(pos, npos);
+    return (year_str);
+}
+
+int BitcoinExchange::utils_convert(const std::string &reader, size_t pos, size_t npos) {
+    std::string year_str = reader.substr(pos, npos);
+    if (!check_digits(year_str))
+        return (0);
+    int value;
+    std::stringstream ss(year_str);
+    ss >> value;
+    return (value);
+}
+
+float BitcoinExchange::value_convert(const std::string &reader, size_t pos, size_t npos) {
+    std::string year_str = reader.substr(pos, npos);
+    float value;
+    std::stringstream ss(year_str);
+    ss >> value;
+    if (value > 1000) {
+        std::cout << "Error: too large a number." << std::endl;
+        return (1001);
+    } else if (value < 0) {
+        std::cout << "Error: not a positive number." << std::endl;
+        return (1001);
+    }
+    return (value);
+}
+
+float BitcoinExchange::value_convert_csv(const std::string &reader, size_t pos, size_t npos) {
+    std::string year_str = reader.substr(pos, npos);
+    float value;
+    std::stringstream ss(year_str);
+    ss >> value;
+    if (value < 0) {
+        std::cout << "Error: not a positive number." << std::endl;
+        return (1001);
+    }
+    return (value);
+}
+
+int BitcoinExchange::check_month(const std::string &reader) {
+    if (reader[7] != '-') {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    int month = utils_convert(reader, 5, 2);
+    if (month < 1 || month > 12) {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    return (month);
+}
+
+int BitcoinExchange::check_day(const std::string &reader, int month, int year) {
+    if (!isdigit(reader[8]) || reader[10] != ' ' || reader[11] != '|') {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    int day = utils_convert(reader, 8, 2);
+    if ((day == 1 && month == 1 && year == 2009)) {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    if (is_leap_year(year) == 1 && month == 2 && day <= 29) {
+        return 1;
+    } else if (is_leap_year(year) == 0 && month == 2 && day <= 28) {
+        return 1;
+    } else if ((month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) && day <= 31) {
+        return 1;
+    } else if ((month == 4 || month == 6 || month == 9 || month == 11) && day <= 30) {
+        return 1;
+    } else {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return 0;
+    }
+}
+
+int BitcoinExchange::check_year(const std::string &reader) {
+    if (reader[4] != '-') {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    std::string year_str = reader.substr(0, 4);
+    int year = utils_convert(year_str, 0, 4);
+    if (year < 2009) {
+        std::cout << "Error: bad input => " << reader << std::endl;
+        return (0);
+    }
+    return (year);
+}
+
+int BitcoinExchange::check_value(const std::string &reader) {
+    float value = value_convert(reader, 13, 1000);
+    return (value);
+}
+
+int BitcoinExchange::available_database() {
+    std::ifstream file("data.csv");
+    if (!file.is_open()) {
+        std::cerr << "Error: could not open file." << std::endl;
+        return (1002);
+    }
+    file.close();
+    return (0);
+}
+
+int BitcoinExchange::available_file() {
+    std::ifstream file(this->_file.c_str());
+    if (!file.is_open()) {
+        std::cerr << "Error: could not open file." << std::endl;
+        return (1002);
+    }
+    file.close();
+    return (0);
+}
+
+void BitcoinExchange::printMap(const std::map<int, std::string> &m) {
+    std::map<int, std::string>::const_iterator it = m.begin();
+
+    while (it != m.end()) {
+        std::cout << "Iterator state: " << &it << ", Key: " << it->first << ", Value: " << it->second << std::endl;
+        ++it;
+    }
+}
+
+void BitcoinExchange::populatecsvmap() {
+    std::ifstream openfile("data.csv");
+
+    std::string buffer;
+    size_t i = 0;
+    while(std::getline(openfile, buffer)) {
+        if (i != 0) {
+            this->_mapcsv[i] = buffer;
+            i++;
+        } else
+            i++;
+    }
+    openfile.close();
+}
+
+void BitcoinExchange::parse_data() {
+    std::map<int, std::string>::const_iterator it = this->_mapcsv.begin();
+    std::map<int, std::string>::const_iterator it2 = this->_map.begin();
+
+    while (it2 != this->_map.end())
+        ++it2;
+    --it2;
+    while (it2 != this->_map.end()) {
+        it = this->_mapcsv.begin();
+        std::string input_value = ymd_valRet(it2->second, 0, 10);
+        std::string input_ym = ymd_valRet(it2->second, 0, 7);
+        int input_d = utils_convert(it2->second, 8, 2);
+        while (it != this->_mapcsv.end()) {
+            std::string csv_value = ymd_valRet(it->second, 0, 10);
+            std::string csv_ym = ymd_valRet(it->second, 0, 7);
+            int csv_d = utils_convert(it->second, 8, 2);
+            if (csv_ym == input_ym) {
+                if (csv_d == input_d) {
+                    float csv_val = value_convert_csv(it->second, 11, 100);
+                    float list_val = value_convert(it2->second, 13, 100);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                } else if (csv_d > input_d) {
+                    --it;
+                    float csv_val = value_convert_csv(it->second, 11, 100);
+                    float list_val = value_convert(it2->second, 13, 100);
+                    float final_value = csv_val * list_val;
+                    std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                    break;
+                }
+            }
+            ++it;
+            if (it == this->_mapcsv.end()) {
+                --it;
+                float csv_val = value_convert_csv(it->second, 11, 100);
+                float list_val = value_convert(it2->second, 13, 100);
+                float final_value = csv_val * list_val;
+                std::cout << input_value << " => " << list_val << " = " << final_value << std::endl;
+                break;
+            }
+        }
+        break;
+    }
+}
+
+void BitcoinExchange::filereader() {
+    if (available_database() == 1002)
+        return;
+    else if (available_file() == 1002)
+        return ;
+    populatecsvmap();
+    std::ifstream openfile(this->_file.c_str());
+    size_t i = 0;
+    std::string reader;
+    while(std::getline(openfile, reader)) {
+        if (i != 0) {
+            if (check_pipes(reader)) {
+                int month = check_month(reader);
+                int year = check_year(reader);
+                if (month!= 0 && year!= 0) {
+                    if (check_day(reader, month, year)!= 0) {
+                        if (check_value(reader)!= 1001) {
+                            int nextKey = _map.size();
+                            this->_map.insert(std::make_pair(nextKey, reader));
+                            parse_data();
+                        }
+                    }
+                }
+            }
+        } else {
+            i++;
+        }
+    }
+    openfile.close();
+    // printMap(_mapcsv);
 }

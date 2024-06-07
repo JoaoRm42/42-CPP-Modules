@@ -1,17 +1,20 @@
-//
-// Created by Neddy on 20/03/2024.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/05 11:21:36 by joaoped2          #+#    #+#             */
+/*   Updated: 2024/06/05 12:04:57 by joaoped2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "RPN.hpp"
 
-int main(int ac, char **av) {
-    if (ac != 2) {
-        std::cout << "Error: Wrong input!" << std::endl;
-    }
-    try {
-        RPN testing1(av[1]);
-    }
-    catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
-    }
+int main(int ac, const char **av) {
+    if (ac == 2)
+        RPN rpn(av);
+    else
+        std::cout << "Error" << std::endl;
 }

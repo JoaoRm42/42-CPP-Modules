@@ -1,39 +1,49 @@
-//
-// Created by joaoped2 on 3/21/24.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: joaoped2 <joaoped2@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/06 10:14:04 by joaoped2          #+#    #+#             */
+/*   Updated: 2024/06/06 14:17:40 by joaoped2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#ifndef CPP_MODULES_42_PMERGEME_HPP
-#define CPP_MODULES_42_PMERGEME_HPP
+#ifndef PMERGEME_HPP
+# define PMERGEME_HPP
 
 #include <iostream>
-#include <algorithm>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
 #include <vector>
 #include <deque>
-#include <iterator>
-#include <climits>
+#include <sstream>
+#include <algorithm>
 #include <ctime>
 
 class PmergeMe {
     private:
-        std::vector<int> _vec;
-        std::deque<int> _deq;
-    public:
+        std::vector<std::string> _vector;
+        std::deque<std::string> _deque;
         PmergeMe();
-        PmergeMe(std::vector<int> cont);
-        PmergeMe(const PmergeMe &cpy);
-        PmergeMe& operator=(const PmergeMe &cpy);
+        PmergeMe(const PmergeMe &obj);
+        PmergeMe& operator=(const PmergeMe &obj);
+    public:
+        PmergeMe(char **av);
         ~PmergeMe();
-
-        void sortCont();
-        void printVec();
-        void mergeVec(std::vector<int> &vector);
-        void sortMergeVec(std::vector<int> &left, std::vector<int> &right, std::vector<int> &vector);
-        void mergeDec(std::deque<int> &vector);
-        void sortMergeDec(std::deque<int> &left, std::deque<int> &right, std::deque<int> &vector);
+        void fill_containers(char **av);
+        void interface(char **av);
+        int check_valid_containers();
+        void print_vector(const std::vector<int> &vector);
+        void print_deque(const std::deque<int> &deque);
+        bool isInteger(const std::string& str);
+        void insertSortedVector(std::vector<int>& vec, int num);
+        void insertSortedDeque(std::deque<int>& vec, int num);
+        void fordJohnsonSortVector(std::vector<int>& arr);
+        void fordJohnsonSortDeque(std::deque<int>& arr);
+        std::vector<int> convertToIntVector(const std::vector<std::string>& stringVector);
+        std::deque<int> convertToIntDeque(const std::deque<std::string>& stringDeque);
+        void send_vector();
+        void send_deque();
 };
 
-
-#endif //CPP_MODULES_42_PMERGEME_HPP
+#endif
