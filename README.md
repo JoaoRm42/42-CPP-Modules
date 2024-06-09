@@ -23,10 +23,10 @@ Before you begin, ensure you have met the following requirements:
 
 ## Modules
 
---------------------------------------------------------------------------------------------------------------------------------------
-| Module     | Topics Covered                                                                                                        |
-|------------|-----------------------------------------------------------------------------------------------------------------------|
-| Module 00  | Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Module     | Topics Covered                                                                                                        | Folder               |
+|------------|-----------------------------------------------------------------------------------------------------------------------|----------------------|
+| Module 00  | Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff | [Go to CPP00](CPP00) |
 | Module 01  | Memory allocation, pointers to members, references, switch statement                                                  |
 | Module 02  | Ad-hoc polymorphism, operator overloading and Orthodox Canonical class form                                           |
 | Module 03  | Inheritance                                                                                                           |
