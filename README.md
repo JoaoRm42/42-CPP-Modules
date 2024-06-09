@@ -24,18 +24,18 @@ Before you begin, ensure you have met the following requirements:
 ## Modules
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Module     | Topics Covered                                                                                                        | Folder         | Subject                             |
+| Module     | Topics Covered                                                                                                        | Folder         | Subjects                            |
 |------------|-----------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------|
 | Module 00  | Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff | [CPP00](CPP00) | [Subject](/CPP00/cpp00.subject.pdf) |
-| Module 01  | Memory allocation, pointers to members, references, switch statement                                                  | [CPP01](CPP00) |
-| Module 02  | Ad-hoc polymorphism, operator overloading and Orthodox Canonical class form                                           | [CPP02](CPP00) |
-| Module 03  | Inheritance                                                                                                           | [CPP03](CPP00) |
-| Module 04  | Subtype polymorphism, abstract classes, interfaces                                                                    | [CPP04](CPP00) |
-| Module 05  | Repetition and Exceptions                                                                                             | [CPP05](CPP00) |
-| Module 06  | C++ casts                                                                                                             | [CPP06](CPP00) |
-| Module 07  | C++ templates                                                                                                         | [CPP07](CPP00) |
-| Module 08  | Templated containers, iterators, algorithms                                                                           | [CPP08](CPP00) |
-| Module 09  | STL(Standard Template Library)                                                                                        | [CPP09](CPP00) |
+| Module 01  | Memory allocation, pointers to members, references, switch statement                                                  | [CPP01](CPP00) | [Subject](/CPP01/cpp01.subject.pdf) |
+| Module 02  | Ad-hoc polymorphism, operator overloading and Orthodox Canonical class form                                           | [CPP02](CPP00) | [Subject](/CPP02/cpp02.subject.pdf) |
+| Module 03  | Inheritance                                                                                                           | [CPP03](CPP00) | [Subject](/CPP03/cpp03.subject.pdf) |
+| Module 04  | Subtype polymorphism, abstract classes, interfaces                                                                    | [CPP04](CPP00) | [Subject](/CPP04/cpp04.subject.pdf) |
+| Module 05  | Repetition and Exceptions                                                                                             | [CPP05](CPP00) | [Subject](/CPP05/cpp05.subject.pdf) |
+| Module 06  | C++ casts                                                                                                             | [CPP06](CPP00) | [Subject](/CPP06/cpp06.subject.pdf) |
+| Module 07  | C++ templates                                                                                                         | [CPP07](CPP00) | [Subject](/CPP07/cpp07.subject.pdf) |
+| Module 08  | Templated containers, iterators, algorithms                                                                           | [CPP08](CPP00) | [Subject](/CPP08/cpp08.subject.pdf) |
+| Module 09  | STL(Standard Template Library)                                                                                        | [CPP09](CPP00) | [Subject](/CPP09/cpp09.subject.pdf) |
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Contributing
