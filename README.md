@@ -36,7 +36,7 @@ Before you begin, ensure you have met the following requirements:
 | Module 07  | C++ templates                                                                                                         |
 | Module 08  | Templated containers, iterators, algorithms                                                                           |
 | Module 09  | STL(Standard Template Library)                                                                                        |
-|------------------------------------------------------------------------------------------------------------------------------------|
+--------------------------------------------------------------------------------------------------------------------------------------
 
 ## Contributing
 
