@@ -29,117 +29,28 @@ RPN &RPN::operator=(const RPN &obj) {
 
 RPN::~RPN() {}
 
+int add(int a, int b) {
+    return a + b;
+}
+
+int subtract(int a, int b) {
+    return a - b;
+}
+
+int multiply(int a, int b) {
+    return a * b;
+}
+
+int divide(int a, int b) {
+    return a / b;
+}
+
 void RPN::printStack(const std::stack<std::string> &stack, const char *name) {
     std::stack<std::string> copy = stack;
     while (!copy.empty()) {
         std::cout << "Elements in " << name << ": " << copy.top() << std::endl;
         copy.pop();
     }
-}
-
-void RPN::tokenizeAndPush(std::stack<std::string> &stack, const std::string &input) {
-    std::istringstream iss(input);
-    std::stack<std::string> copy;
-    std::string token;
-    size_t splitPosition = 1;
-    while (iss >> token) {
-        if (token != " ") {
-            if (token.length() != 1) {
-                std::string tmp = token.substr(0, splitPosition);
-                std::string tmp2 = token.substr(splitPosition);
-                copy.push(tmp);
-                copy.push(tmp2);
-            }
-            else
-                copy.push(token);
-        }
-    }
-    while (!copy.empty()) {
-        stack.push(copy.top());
-        copy.pop();
-    }
-}
-
-void RPN::filler() {
-    for (size_t i = 0; i <= 9; ++i) {
-        std::stringstream ss;
-        ss << i;
-        this->_validation.push(ss.str());
-    }
-    this->_validation.push("+");
-    this->_validation.push("-");
-    this->_validation.push("*");
-    this->_validation.push("/");
-}
-
-int RPN::check_av(const char **av) {
-    int i = 0;
-    int num = 0;
-    int operators = 0;
-    
-    while (av[1][i]) {
-        char c = av[1][i];
-        if (c == '+' || c == '-' || c == '*' || c == '/')
-            operators++;
-        else if(c >= '0' && c <= '9')
-            num++;
-        i++;
-    }
-    if (num - operators != 1)  {
-        std::cout << "Error" << std::endl;
-        return (1);
-    }
-    return (0);
-}
-
-void RPN::fill_stack(const char **av) {
-    if (check_av(av))
-        return ;
-    tokenizeAndPush(this->_string, av[1]);
-    filler();
-    if (!check_stack_valid())
-        return ;
-    if (!execute_calculus())
-        return ;
-}
-
-int RPN::check_stack_valid() {
-    std::stack<std::string> copy = this->_string;
-    while (!copy.empty()) {
-        bool found = false;
-        std::stack<std::string> copy2 = this->_validation;
-
-        while (!copy2.empty()) {
-            if (copy2.top() == copy.top()) {
-                found = true;
-                break;
-            }
-            copy2.pop();
-        }
-        if (!found) {
-            std::cout << "Error" << std::endl;
-            return (0);
-        }
-        copy.pop();
-    }
-    return (1);
-}
-
-int RPN::check_stack_digit(std::stack<std::string> &tmp) {
-    if (!tmp.empty()) {
-        const std::string& topElement = tmp.top();
-
-        bool isnumber = true;
-        for (size_t i = 0; i < topElement.length(); ++i) {
-            if (!std::isdigit(topElement[i])) {
-                isnumber = false;
-                break;
-            }
-        }
-        if (!isnumber)
-            return 0;
-    }
-    return 1;
 }
 
 int RPN::clean_stack(std::stack<std::string> &stack, std::string &first, std::string &second) {
@@ -196,13 +107,50 @@ int RPN::check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp
         return (0);
 }
 
+void RPN::check_operator(int (*&operation)(int, int), const char *signal) {
+    switch (*signal) {
+    case '+':
+        operation = add;
+        break;
+    case '-':
+        operation = subtract;
+        break;
+    case '*':
+        operation = multiply;
+        break;
+    case '/':
+        operation = divide;
+        break;
+    default:
+        std::cerr << "Unknown operator" << std::endl;
+        return ;
+    }
+}
+
+int RPN::calc_exec(std::stack<std::string> &tmp, std::stack<std::string> &calc, std::string &first, std::string &second, const char *signal) {
+    int (*operation)(int, int);
+    int result;
+    tmp.pop();
+    if (calc.size() >= 2 && tmp.empty()) {
+        if (check_final(calc, tmp, first, second)) {
+            std::cout << "Error" << std::endl;
+                return(0);
+        }
+    }
+    check_operator(operation, signal);
+    if (!clean_stack(calc, first, second))
+        return (0);
+    result = operation(stringToInt(first), stringToInt(second));
+    calc.push(intToString(result));
+    return (1);
+}
+
+
 int RPN::execute_calculus() {
     std::stack<std::string> calc;
     std::stack<std::string> tmp = this->_string;
     std::string first;
     std::string second;
-    std::string total;
-    int math_t;
     if (check_validation_calc(calc, tmp) != 0) {
         std::cout << "Error" << std::endl;
         return(1);
@@ -210,52 +158,19 @@ int RPN::execute_calculus() {
     while (!tmp.empty()) {
         calc.push(tmp.top());
         if (calc.top() == "+") {
-            tmp.pop();
-            if (calc.size() >= 2 && tmp.empty()) {
-                if (check_final(calc, tmp, first, second)) {
-                    std::cout << "Error" << std::endl;
-                    return(0);
-                }
-            }
-            clean_stack(calc, first, second);
-            math_t = stringToInt(first) + stringToInt(second);
-            calc.push(intToString(math_t));
-        } else if (calc.top() == "/") {
-            tmp.pop();
-            if (calc.size() >= 2 && tmp.empty()) {
-                if (check_final(calc, tmp, first, second)) {
-                    std::cout << "Error" << std::endl;
-                    return(0);
-                }
-            }
-            if (!clean_stack(calc, first, second))
+            if (!calc_exec(tmp, calc, first, second, "+"))
                 return (0);
-            math_t = stringToInt(first) / stringToInt(second);
-            calc.push(intToString(math_t));
+        } else if (calc.top() == "/") {
+            if (!calc_exec(tmp, calc, first, second, "/"))
+                return (0);
         } else if (calc.top() == "*") {
-            tmp.pop();
-            if (calc.size() >= 2 && tmp.empty()) {
-                if (check_final(calc, tmp, first, second)) {
-                    std::cout << "Error" << std::endl;
-                    return(0);
-                }
-            }
-            clean_stack(calc, first, second);
-            math_t = stringToInt(first) * stringToInt(second);
-            calc.push(intToString(math_t));
+            if (!calc_exec(tmp, calc, first, second, "*"))
+                return (0);
         } else if (calc.top() == "-") {
-            tmp.pop();
-            if (calc.size() >= 2 && tmp.empty()) {
-                if (check_final(calc, tmp, first, second)) {
-                    std::cout << "Error" << std::endl;
-                    return(0);
-                }
-            }
-            clean_stack(calc, first, second);
-            math_t = stringToInt(first) - stringToInt(second);
-            calc.push(intToString(math_t));
+            if (!calc_exec(tmp, calc, first, second, "-"))
+                return (0);
         } else if (tmp.size() == 1)
-            break; 
+            break;
         else {
             tmp.pop();
         }
@@ -267,4 +182,91 @@ int RPN::execute_calculus() {
 
     std::cout << calc.top() << std::endl;
     return (1);
+}
+
+int RPN::check_stack_valid() {
+    std::stack<std::string> copy = this->_string;
+    while (!copy.empty()) {
+        bool found = false;
+        std::stack<std::string> copy2 = this->_validation;
+
+        while (!copy2.empty()) {
+            if (copy2.top() == copy.top()) {
+                found = true;
+                break;
+            }
+            copy2.pop();
+        }
+        if (!found) {
+            std::cout << "Error" << std::endl;
+            return (0);
+        }
+        copy.pop();
+    }
+    return (1);
+}
+
+void RPN::filler() {
+    for (size_t i = 0; i <= 9; ++i) {
+        std::stringstream ss;
+        ss << i;
+        this->_validation.push(ss.str());
+    }
+    this->_validation.push("+");
+    this->_validation.push("-");
+    this->_validation.push("*");
+    this->_validation.push("/");
+}
+
+void RPN::tokenizeAndPush(std::stack<std::string> &stack, const std::string &input) {
+    std::istringstream iss(input);
+    std::stack<std::string> copy;
+    std::string token;
+    size_t splitPosition = 1;
+    while (iss >> token) {
+        if (token != " ") {
+            if (token.length() != 1) {
+                std::string tmp = token.substr(0, splitPosition);
+                std::string tmp2 = token.substr(splitPosition);
+                copy.push(tmp);
+                copy.push(tmp2);
+            }
+            else
+                copy.push(token);
+        }
+    }
+    while (!copy.empty()) {
+        stack.push(copy.top());
+        copy.pop();
+    }
+}
+
+int RPN::check_av(const char **av) {
+    int i = 0;
+    int num = 0;
+    int operators = 0;
+    while (av[1][i]) {
+        char c = av[1][i];
+        if (c == '+' || c == '-' || c == '*' || c == '/')
+            operators++;
+        else if(c >= '0' && c <= '9')
+            num++;
+        i++;
+    }
+    if (num - operators != 1)  {
+        std::cout << "Error" << std::endl;
+        return (1);
+    }
+    return (0);
+}
+
+void RPN::fill_stack(const char **av) {
+    if (check_av(av))
+        return ;
+    tokenizeAndPush(this->_string, av[1]);
+    filler();
+    if (!check_stack_valid())
+        return ;
+    if (!execute_calculus())
+        return ;
 }

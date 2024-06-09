@@ -39,9 +39,10 @@ class RPN {
         void filler();
         std::string intToString(int number);
         int stringToInt(const std::string& str);
-        int check_stack_digit(std::stack<std::string> &tmp);
         int check_validation_calc(std::stack<std::string> &calc, std::stack<std::string> &tmp);
         int check_final(std::stack<std::string> &calc, std::stack<std::string> &tmp, std::string &first, std::string &second);
+        int calc_exec(std::stack<std::string> &tmp, std::stack<std::string> &calc, std::string &first, std::string &second, const char *signal);
+        void check_operator(int (*&operation)(int, int), const char *signal);
         int check_av(const char **av);
 };
 
