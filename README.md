@@ -23,20 +23,20 @@ Before you begin, ensure you have met the following requirements:
 
 ## Modules
 
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-| Module     | Topics Covered                                                                                                        | Folder         | Subjects                            |
-|------------|-----------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------|
-| Module 00  | Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff | [CPP00](CPP00) | [Subject](/CPP00/cpp00.subject.pdf) |
-| Module 01  | Memory allocation, pointers to members, references, switch statement                                                  | [CPP01](CPP00) | [Subject](/CPP01/cpp01.subject.pdf) |
-| Module 02  | Ad-hoc polymorphism, operator overloading and Orthodox Canonical class form                                           | [CPP02](CPP00) | [Subject](/CPP02/cpp02.subject.pdf) |
-| Module 03  | Inheritance                                                                                                           | [CPP03](CPP00) | [Subject](/CPP03/cpp03.subject.pdf) |
-| Module 04  | Subtype polymorphism, abstract classes, interfaces                                                                    | [CPP04](CPP00) | [Subject](/CPP04/cpp04.subject.pdf) |
-| Module 05  | Repetition and Exceptions                                                                                             | [CPP05](CPP00) | [Subject](/CPP05/cpp05.subject.pdf) |
-| Module 06  | C++ casts                                                                                                             | [CPP06](CPP00) | [Subject](/CPP06/cpp06.subject.pdf) |
-| Module 07  | C++ templates                                                                                                         | [CPP07](CPP00) | [Subject](/CPP07/cpp07.subject.pdf) |
-| Module 08  | Templated containers, iterators, algorithms                                                                           | [CPP08](CPP00) | [Subject](/CPP08/cpp08.subject.pdf) |
-| Module 09  | STL(Standard Template Library)                                                                                        | [CPP09](CPP00) | [Subject](/CPP09/cpp09.subject.pdf) |
--------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Module     | Grade   | Topics Covered                                                                                                        | Folder         | Subjects                            |
+|------------|---------|-----------------------------------------------------------------------------------------------------------------------|----------------|-------------------------------------|
+| Module 00  | 100/100 | Namespaces, classes, member functions, stdio streams, initialization lists, static, const, and some other basic stuff | [CPP00](CPP00) | [Subject](/CPP00/cpp00.subject.pdf) |
+| Module 01  | 100/100 | Memory allocation, pointers to members, references, switch statement                                                  | [CPP01](CPP00) | [Subject](/CPP01/cpp01.subject.pdf) |
+| Module 02  |  90/100 | Ad-hoc polymorphism, operator overloading and Orthodox Canonical class form                                           | [CPP02](CPP00) | [Subject](/CPP02/cpp02.subject.pdf) |
+| Module 03  | 100/100 | Inheritance                                                                                                           | [CPP03](CPP00) | [Subject](/CPP03/cpp03.subject.pdf) |
+| Module 04  | 100/100 | Subtype polymorphism, abstract classes, interfaces                                                                    | [CPP04](CPP00) | [Subject](/CPP04/cpp04.subject.pdf) |
+| Module 05  | 100/100 | Repetition and Exceptions                                                                                             | [CPP05](CPP00) | [Subject](/CPP05/cpp05.subject.pdf) |
+| Module 06  | 100/100 | C++ casts                                                                                                             | [CPP06](CPP00) | [Subject](/CPP06/cpp06.subject.pdf) |
+| Module 07  | 100/100 | C++ templates                                                                                                         | [CPP07](CPP00) | [Subject](/CPP07/cpp07.subject.pdf) |
+| Module 08  | 100/100 | Templated containers, iterators, algorithms                                                                           | [CPP08](CPP00) | [Subject](/CPP08/cpp08.subject.pdf) |
+| Module 09  | 100/100 | STL(Standard Template Library)                                                                                        | [CPP09](CPP00) | [Subject](/CPP09/cpp09.subject.pdf) |
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Contributing
 
